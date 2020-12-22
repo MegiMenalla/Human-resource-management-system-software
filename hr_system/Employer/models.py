@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -68,3 +68,10 @@ class AllowanceRequest(models.Model):
 
     approval_flag = models.BooleanField(default=False)
 
+
+class Profil(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+    account = models.OneToOneField(Users, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
