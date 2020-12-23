@@ -3,6 +3,7 @@ from django.urls import path, include
 
 from . import views
 
+
 urlpatterns = [
     path(r'test/', views.test),
     path('', views.home, name="home"),

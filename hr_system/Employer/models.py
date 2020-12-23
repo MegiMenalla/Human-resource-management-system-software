@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 
+
+# Create your models here.
 
 
 class Departments(models.Model):
     id_department = models.AutoField(primary_key=True)
     department_name = models.CharField(max_length=100, null=True)
-    parent_dep = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    parent_dep = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.department_name
@@ -18,7 +19,6 @@ class Users(models.Model):
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     salary = models.FloatField(null=True)
-    email = models.EmailField(max_length=100)
     phone_no = models.CharField(max_length=200, null=True)
     hire_date = models.DateField(auto_now_add=True)
     department_id = models.ForeignKey(Departments, null=True, on_delete=models.CASCADE)
@@ -72,6 +72,7 @@ class AllowanceRequest(models.Model):
 class Profil(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     account = models.OneToOneField(Users, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.user
