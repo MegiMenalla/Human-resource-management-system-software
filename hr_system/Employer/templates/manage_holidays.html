@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<h4 class="pl-5 pt-5 mt-5 pb-3 bg-success">Manage offical holidays</h4>
+<div class="row pl-5 ml-5" style="position: absolute;top: 150px;left: 500px;">
+    <form>
+        <div class="form-group">
+            <label for="name">Holiday Name</label>
+            <input type="text" class="form-control" id="holiday" placeholder="Holiday name">
+        </div>
+        <div class="pl-4">
+            <input class="form-check-input" type="date" id="data">
+            <label class="form-check-label" for="inlineFormCheck">
+                Date
+            </label>
+        </div>
+        <div class="form-check pl-4 pt-5">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                Activate
+            </label>
+        </div>
+
+
+        <button type="submit" class="btn btn-success mt-5">Create new</button>
+        <button type="submit" class="btn btn-secondary mt-5">Edit</button>
+        <button type="submit" class="btn btn-danger mt-5">Delete</button>
+    </form>
+</div>
+
+
+{% endblock %}

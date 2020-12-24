@@ -12,8 +12,9 @@ router.register('holidays', views.OfficalHolidaysView)
 router.register('allowance_request', views.AllowanceRequestView)
 router.register('profil', views.ProfilView)
 
-
 urlpatterns = [
+   # path(r'dep/', views.DepartmentsListAPIView.as_view(), name='dep'),
+   # path(r'depdetails/<int:pk>/', views.DepDetailAPIView.as_view(), name='depdetails'),
     path('', include(router.urls))
 
 ]

@@ -1,4 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
+
 from .models import *
 
 
@@ -6,3 +8,9 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class BliForm(ModelForm):
+    class Meta:
+        model = Departments
+        fields = ['department_name', 'parent_dep']

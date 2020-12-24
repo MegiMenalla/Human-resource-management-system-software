@@ -1,57 +1,138 @@
 {% extends 'main.html' %}
-{% block permbajtje %}
-<div class="view" style="background-image: url('https://image.freepik.com/free-photo/woman-hangs-frame-wall-empty-place-your-photo-picture-design-logo_182615-159.jpg');height:700px;width:100%;o background-repeat: no-repeat; background-size: cover; background-position: center center;">
-    <!-- Mask & flexbox options-->
-      <!-- Content -->
-      <div class="container pt-0">
-        <!--Grid row-->
-        <div class="row">
-          <!--Grid column-->
-          <div class="col-md-6 white-text text-center text-md-left" style="position: absolute;
-                                                                            text-align: center;
-                                                                            top: 100px;
-                                                                            left: 350px;">
-            <h1 class="h1-responsive font-weight-bold wow text-center  position-static mt-5" data-wow-delay="0.3s">The Human Resources Guy</h1>
-            <hr class="hr-light wow fadeOutLeft" data-wow-delay="0.3s">
-          </div>
+{% load static %}
+{% block content %}
+
+<div class="page-wrapper toggled">
+    <nav id="sidebar" class="sidebar-wrapper" style="top:100px;">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <div class="user-info">
+          <span class="user-name">Bob
+            <strong>HR Guy</strong>
+          </span>
+                    <span class="user-role">Administrator</span>
+                    <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+                </div>
+            </div>
+            <!-- sidebar-header  -->
+            <div class="sidebar-search">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu" placeholder="Search...">
+                        <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">
+                        <span>General</span>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'manage_departments' %}" target="_blank">
+                            <i class="far fa-gem"></i>
+                            <span>Manage Departments</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="{% url 'manage_employees' %}"  target="_blank">
+                            <i class="far fa-gem"></i>
+                            <span>Manage Employees</span>
+                        </a>
+
+                    </li>
+                     <li >
+                        <a href="{% url 'manage_holidays' %}"  target="_blank">
+                            <i class="far fa-gem"></i>
+                            <span>Manage Holidays</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Charts</span>
+                        </a>
+
+                    </li>
+                    <li >
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                    </li>
+                    <li class="header-menu">
+                        <span>Extra</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span>Documentation</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar"></i>
+                            <span>Calendar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-folder"></i>
+                            <span>Examples</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
         </div>
 
+    </nav>
+    <!-- sidebar-wrapper  -->
+    <main class="page-content mt-5">
+        <div class="container-fluid mt-5">
+            <div class="row-fluid">
+                    {% include 'components/see_answer_requests.html' %}
+            </div>
+            <div id="list-wrapper">
 
-         <div class="row">
-              <!--Grid column-->
-                 <div class="col-5   text-center  position-static" >
-                    <p style="position: absolute;
-                                text-align: center;
-                                top: 350px;
-                                left: 250px;
-                                font-size: 30px;
-                                font-weight: 700;
-                                font-family: Arial, Helvetica;
-                                    "><a href="#" style="text-decoration: none;color:#17a2b8;">Manage <br>new <br> Employers,<br>Departments,<br>Holidays</a></p>
-                 </div>
-                 <div class="col-2   text-center  position-static">
-                    <p style="position: absolute;
-                                text-align: center;
-                                top: 350px;
-                                left: 670px;
-                                font-size: 30px;
-                                font-weight: 700;
-                                font-family: Arial, Helvetica;
-                                                "><a href="#" style="text-decoration: none;color:#17a2b8;">Give<br> permissions</a></p>
-                 </div>
-                 <div class="col-5   text-center  position-static">
-                    <p style="position: absolute;
-                                text-align: center;
-                                top: 330px;
-                                left: 1080px;
-                                font-size: 30px;
-                                font-weight: 700;
-                                font-family: Arial, Helvetica;
-                                           "><a href="#" style="text-decoration: none;color:#17a2b8;">General <br> Overview<br><br>Reports</a></p>
-                 </div>
-         </div>
+            </div>
 
-       <!-- Content -->
-      </div>
+
+        </div>
+    </main>
+    <!-- page-content" -->
 </div>
+
+
+<script type="text/javascript">
+   // buildList()
+
+    function buildList(){
+        var wrapper = document.getElementById('list-wrapper')
+        var url = 'http://127.0.0.1:8000/api/departments/'
+        fetch(url)
+        .then((resp)=> resp.json())
+        .then(function(data){
+            console.log('Data:', data)
+
+            data.forEach((el) => {
+                let item = `<div id="data-row-${el.id}" >${el.department_name}</div>`
+                wrapper.innerHTML +=item
+             });
+        })
+    }
+
+</script>
+
+
 {% endblock%}

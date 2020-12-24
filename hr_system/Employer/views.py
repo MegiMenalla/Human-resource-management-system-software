@@ -18,7 +18,22 @@ def test(request):
     return HttpResponse('hi')
 
 
-def home(request):
+def manage_holidays(request):
+    data = {}
+    return render(request, 'manage_holidays.html', data)
+
+
+def manage_employees(request):
+    data = {}
+    return render(request, 'manage_employees.html', data)
+
+
+def manage_departments(request):
+    data = {}
+    return render(request, 'manage_departments.html', data)
+
+
+def hr(request, id):
     data = {
 
     }
@@ -34,7 +49,7 @@ def logini(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('hr', user.id)
         else:
             messages.info(request, 'Emri ose kodi eshte gabim!')
             return render(request, 'registration/login.html', data)

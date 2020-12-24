@@ -1,12 +1,18 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics, status, mixins
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from ..models import *
 from .serializers import *
+from rest_framework.generics import *
 
 
 class DepartmentView(viewsets.ModelViewSet):
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class UsersView(viewsets.ModelViewSet):
@@ -41,37 +47,16 @@ class ProfilView(viewsets.ModelViewSet):
 
 
 '''
-
-def test(request):
-    return HttpResponse('hi')
-
-
-class DepartmentsGenericAPI(generics.GenericAPIView
-    , mixins.ListModelMixin
-    , mixins.RetrieveModelMixin
-    , mixins.CreateModelMixin
-    , mixins.UpdateModelMixin
-    , mixins.DestroyModelMixin):
-    serializer_class = DepartmentSerializer
+class DepartmentsListAPIView(ListAPIView):
     queryset = Departments.objects.all()
-    lookup_field = 'pk'
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    serializer_class = depSer
 
-    def get(self, request, pk=None):
-        if id:
-            return self.retrieve(request)
-        else:
-            return self.list(request)
 
-    def post(self, request):
-        return self.create(request)
-
-    def put(self, request, pk=None):
-        return self.update(request, pk)
-
-    def delete(self, request, pk):
-        return self.destroy(request, pk)
+class DepDetailAPIView(RetrieveAPIView):
+    queryset = Departments
+    serializer_class = depSer
+    lookup_field = 'id_department'
+    lookup_url_kwarg = 'pk'
 
 
 class DepartmentAPIView(APIView):
@@ -118,4 +103,36 @@ class DepartmentDetails(APIView):
         dep = self.get_object(id)
         dep.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+class DepartmentsGenericAPI(generics.GenericAPIView
+                            , mixins.ListModelMixin
+                            , mixins.RetrieveModelMixin
+                            , mixins.CreateModelMixin
+                            , mixins.UpdateModelMixin
+                            , mixins.DestroyModelMixin):
+    serializer_class = DepartmentSerializer
+    queryset = Departments.objects.all()
+    lookup_field = 'id_department'
+    lookup_url_kwarg = 'pk'
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk=None):
+        if id:
+            return self.retrieve(request)
+        else:
+            return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+    def put(self, request, pk=None):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk)
+
 '''

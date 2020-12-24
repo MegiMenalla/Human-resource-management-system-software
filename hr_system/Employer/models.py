@@ -67,12 +67,14 @@ class AllowanceRequest(models.Model):
     end_hour = models.TimeField(default='23:59:59')
 
     approval_flag = models.BooleanField(default=False)
+    checked = models.BooleanField(default=False)
 
 
 class Profil(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     account = models.OneToOneField(Users, on_delete=models.CASCADE)
     email = models.EmailField(max_length=100, null=True, blank=True)
+    password = models.CharField(max_length=500,default='KokaNeStamboll')
 
     def __str__(self):
         return self.user
