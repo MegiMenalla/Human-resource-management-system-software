@@ -1,0 +1,111 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid pt-5 mt-5 ">
+    <div class="row">
+        <div class="col-3">
+            <h5>Personal information</h5>
+            <p>Date: 25-12-2020</p>
+            <ul>
+                <li class="pb-5 pt-3">Name</li>
+                <li class="pb-5">Last Name</li>
+                <li class="pb-5">Job position</li>
+                <li class="pb-5">Department</li>
+                <li class="pb-5">Days left in the current position</li>
+                <li class="pb-5">Days left to request permission</li>
+                <li class="pb-5">Nearest future holiday</li>
+            </ul>
+        </div>
+
+        <div class="col-5">
+            <div class="row">
+                <div class="col ">
+                    <h3>Checked: </h3>
+                    <table class="table" style="width:90%;background-color:white;">
+                        <tr>
+                            <th>Department</th>
+                            <th>Emplyee name</th>
+                            <th>From</th>
+                            <th></th>
+                            <th>To</th>
+                            <th></th>
+                        </tr>
+
+                        <tr>
+                            <td>Dep 1</td>
+                            <td>Megi</td>
+                            <td>Wed</td>
+                            <td>1:00</td>
+                            <td>Friday</td>
+                            <td>1:00</td>
+                            <td><a class="btn  btn-sm btn-success">Approved</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Dep 1</td>
+                            <td>Megi</td>
+                            <td>Wed</td>
+                            <td>1:00</td>
+                            <td>Friday</td>
+                            <td>1:00</td>
+                            <td><a class="btn btn-sm btn-danger">Denied</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <h3>Unchecked</h3>
+                    <table class="table" style="width:90%;background-color:white;">
+                        <tr>
+                            <th>Department</th>
+                            <th>Emplyee name</th>
+                            <th>From</th>
+                            <th></th>
+                            <th>To</th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+
+                        <tr>
+                            <td>Dep 1</td>
+                            <td>Megi</td>
+                            <td>Wed</td>
+                            <td>1:00</td>
+                            <td>Friday</td>
+                            <td>1:00</td>
+                            <td><a class="btn btn-sm btn-outline-danger">Cancel</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Dep 1</td>
+                            <td>Megi</td>
+                            <td>Wed</td>
+                            <td>1:00</td>
+                            <td>Friday</td>
+                            <td>1:00</td>
+                            <td><a class="btn btn-sm btn-outline-danger">Cancel</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <a class="btn btn-success btn-lg  ml-5 mb-5"> << ADD REQUEST >></a>
+
+            <img src="https://image.freepik.com/free-vector/pie-chart-infographic-design_23-2147489914.jpg"
+                 style="width:400px;">
+        </div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

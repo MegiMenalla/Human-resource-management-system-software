@@ -13,5 +13,6 @@ urlpatterns = [
     path(r'manage_departments/', views.manage_departments, name="manage_departments"),
     path(r'manage_employees/', views.manage_employees, name="manage_employees"),
     path(r'manage_holidays/', views.manage_holidays, name="manage_holidays"),
+    path(r'emp_page/', views.emp_page, name="emp_page"),
 
 ]

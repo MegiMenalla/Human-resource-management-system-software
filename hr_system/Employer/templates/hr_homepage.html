@@ -115,10 +115,10 @@
 
 
 <script type="text/javascript">
-   // buildList()
-
+    buildList()
     function buildList(){
         var wrapper = document.getElementById('list-wrapper')
+        wrapper.innerHTML = ''
         var url = 'http://127.0.0.1:8000/api/departments/'
         fetch(url)
         .then((resp)=> resp.json())
@@ -126,7 +126,7 @@
             console.log('Data:', data)
 
             data.forEach((el) => {
-                let item = `<div id="data-row-${el.id}" >${el.department_name}</div>`
+                let item = `<div id="${el.url}" >${el.department_name}</div>`
                 wrapper.innerHTML +=item
              });
         })

@@ -18,6 +18,11 @@ def test(request):
     return HttpResponse('hi')
 
 
+def emp_page(request):
+    data = {}
+    return render(request, 'emp_page.html', data)
+
+
 def manage_holidays(request):
     data = {}
     return render(request, 'manage_holidays.html', data)

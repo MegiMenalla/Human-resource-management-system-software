@@ -46,6 +46,7 @@ class ProfilView(viewsets.ModelViewSet):
     serializer_class = ProfilSerializer
 
 
+
 '''
 class DepartmentsListAPIView(ListAPIView):
     queryset = Departments.objects.all()

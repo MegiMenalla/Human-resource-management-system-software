@@ -2,6 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light .py-5 fixed-top " style="background-color: white;height:70px;color:black;font-weight:bold">
   <a class="navbar-brand " href="#">
       <h3>BOB  FROM HUMAN RESOURCES</h3>
+
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -9,6 +10,7 @@
   <div class="collapse navbar-collapse" id="navbarText">
 
   </div>
+
        <span class="mr-2">Hi  {{request.user}}  </span>
      {% if user.is_authenticated %}
         <span ><a href="{% url 'logoutUser' %}"  class="btn btn-sm btn-info text-white pl-3 pr-3">Log Out</a></span>
