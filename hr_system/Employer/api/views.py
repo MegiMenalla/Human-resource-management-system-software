@@ -9,57 +9,51 @@ from .serializers import *
 from rest_framework.generics import *
 
 
-class DepartmentView(viewsets.ModelViewSet):
+class DepartmentView(generics.ListAPIView):
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
-    permission_classes = [permissions.AllowAny]
 
 
-class UsersView(viewsets.ModelViewSet):
-    queryset = Users.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (permissions.IsAdminUser,)
+class CreateDepartmentView(APIView):
+    serializer_class = CreateDepartmentSerializer
 
+    def post(self, request):
 
-class RoleView(viewsets.ModelViewSet):
-    queryset = Role.objects.all()
-    serializer_class = RoleSerializer
+        serializer = self.serializer_class(data=request.data)
 
+        if serializer.is_valid():
+            department_name = serializer.data.get('department_name')
+            department_manager = serializer.data.get('department_manager')
+            parent_dep = serializer.data.get('parent_dep')
+            if parent_dep is not None and Departments.objects.get(department_name=parent_dep).exists():
+                parent = Departments.objects.get(department_name=parent_dep)
+            else:
+                parent = None
 
-class UserRoleView(viewsets.ModelViewSet):
-    queryset = UserRole.objects.all()
-    serializer_class = UserRoleSerializer
+            queryset = Departments.objects.filter(department_name=department_name)
+            if queryset.exists():
+                dep = queryset[0]
+                dep.department_name = department_name
+                dep.department_manager = department_manager
+                dep.parent_dep = parent
+                dep.save()
 
+                return Response(CreateDepartmentSerializer(dep).data, status=status.HTTP_200_OK)
+            else:
+                if parent_dep is None:
+                    dep = Departments(department_name=department_name,
+                                      department_manager=department_manager)
+                else:
+                    dep = Departments(department_name=department_name,
+                                      department_manager=department_manager,
+                                      parent_dep=parent)
+                dep.save()
+                return Response(CreateDepartmentSerializer(dep).data, status=status.HTTP_201_CREATED)
 
-class OfficalHolidaysView(viewsets.ModelViewSet):
-    queryset = OfficalHolidays.objects.all()
-    serializer_class = OfficialHolidaysSerializer
-
-
-class AllowanceRequestView(viewsets.ModelViewSet):
-    queryset = AllowanceRequest.objects.all()
-    serializer_class = RequestSerializer
-
-
-class ProfilView(viewsets.ModelViewSet):
-    queryset = Profil.objects.all()
-    serializer_class = ProfilSerializer
-
+        return Response({'Bad Request': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 '''
-class DepartmentsListAPIView(ListAPIView):
-    queryset = Departments.objects.all()
-    serializer_class = depSer
-
-
-class DepDetailAPIView(RetrieveAPIView):
-    queryset = Departments
-    serializer_class = depSer
-    lookup_field = 'id_department'
-    lookup_url_kwarg = 'pk'
-
-
 class DepartmentAPIView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
