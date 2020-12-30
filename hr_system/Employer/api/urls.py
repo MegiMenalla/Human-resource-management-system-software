@@ -6,6 +6,6 @@ from . import views
 from .views import *
 
 urlpatterns = [
-    path(r'dep-all/',  DepartmentView.as_view()),
-    path(r'dep-one/<int:id>/',  OneDepartmentView.as_view()),
+    path(r'departments/',  DepartmentListCreateView.as_view()),
+    path(r'departments/<int:pk>/',  DepartmentRetrieveDeletePut.as_view()),
 ]

@@ -74,6 +74,21 @@ class OneDepartmentView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# list create
+#
+class DepartmentListCreateView(generics.ListCreateAPIView):
+    queryset = Departments.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+class DepartmentRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Departments.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+
+
+
 '''
 class DepartmentView(generics.ListAPIView):
     queryset = Departments.objects.all()
