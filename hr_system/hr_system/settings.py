@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from rest_framework import compat
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
@@ -138,5 +138,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',)
 }
+
+
+
+compat.md_filter_add_syntax_highlight = lambda md: False

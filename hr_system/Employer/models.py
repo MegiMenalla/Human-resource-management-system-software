@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 
 class Departments(models.Model):
     department_name = models.CharField(max_length=100, null=True)
+    department_manager = models.CharField(max_length=100, null=True)
     parent_dep = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __repr__(self):
         return self.department_name
 
 

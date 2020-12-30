@@ -1,29 +1,38 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<h4 class="pl-5 pt-5 mt-5 pb-3 bg-warning">Manage departments:</h4>
-<div class="row pl-5 ml-5" style="position: absolute;top: 150px;left: 500px;">
-    <form id="forma">
-        <div class="form-group">
-            <label for="name">Department Name</label>
-            <input type="text" class="form-control" id="depname" placeholder="Department name">
-        </div>
-        <div class="form-group">
-            <label for="Parent_department">Under the supervision of:</label>
-            <select class="form-control form-control-sm">
-                <option>Small select</option>
-                <option>Small select</option>
-                <option>Small select</option>
-            </select>
-        </div>
+<h4 class="pl-5 pt-5 mt-5 pb-1 bg-warning">Manage departments:</h4>
+<div class="row container pt-5" >
+    <div class="col-6  ">
+        <h5 class="pb-3">List of all departments:</h5>
+        <ul id="listt" style="list-style: none;">
 
+        </ul>
+    </div>
+    <div class="col-6">
+         <h5 class="pb-3">Create a new department:</h5>
+        <form id="form-wrapper">
+            <div class="form-group">
+                <label for="name">Department Name</label>
+                <input type="text" class="form-control" id="depname" placeholder="Department name" required>
 
-        <button type="submit" class="btn btn-success mt-5">Create new</button>
-        <button type="submit" class="btn btn-secondary mt-5">Edit</button>
-        <button type="submit" class="btn btn-danger mt-5">Delete</button>
-    </form>
+                <label for="manager">Department Manager</label>
+                <input type="text" class="form-control" id="depmanager" placeholder="Department manager">
+
+                <label for="Parent_department">Under the supervision of:</label>
+                <select class="form-control form-control-sm" id="wrapper">
+
+                </select>
+            </div>
+            <button type="submit" class="btn btn-warning mt-5">Create new </button>
+
+        </form>
+    </div>
+
 </div>
+
 <script>
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -39,28 +48,84 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 const csrftoken = getCookie('csrftoken');
-console.log('csrftoken');
+var activeItem = null;
 
 
-    var form = document.getElementById('forma')
-    form.addEventListener('submit', function(e){
-        e.preventDefault()
-        console.log('token')
-        console.log(csrftoken);
-        var url = 'http://127.0.0.1:8000/api/departments/'
-        department_name = document.getElementById('depname').value
-        fetch(url,{
-            method : 'POST',
-            headers:{
-                'Content-type':'application/json',
-                'X-CSFRToken':csrftoken,
-            },
-            body: JSON.stringify({'department_name': department_name})
-        }).then(function(response){
-            console.log('inside')
-        })
+
+
+buildList()
+
+function buildList(){
+    var wrapper = document.getElementById('wrapper')
+    wrapper.innerHTML = ''
+    var listt = document.getElementById('listt')
+    listt.innerHTML = ''
+    var url = 'http://127.0.0.1:8000/api/dep-all/'
+    fetch(url)
+    .then((resp)=> resp.json())
+    .then(function(data){
+        console.log('Data:', data)
+
+        data.forEach((el) => {
+            var item = `<option  id="${el.id}" >${el.department_name}</option >`
+            wrapper.innerHTML +=item
+            var item1 = `<li  id="${el.id}" class="mb-3 " >
+                          <button type="submit" class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
+                          <strong>  ${el.department_name} </strong>  ( Manager: ${el.department_manager } )</li>`
+            listt.innerHTML +=item1
+
+         })
+
     })
+}
+
+
+
+var form = document.getElementById('form-wrapper')
+form.addEventListener('submit', function(e){
+    e.preventDefault()
+    console.log('Form submitted')
+    var url = 'http://127.0.0.1:8000/api/dep-all/'
+    var depname = document.getElementById('depname').value;
+    var depmanager = document.getElementById('depmanager').value;
+
+    var selector = document.getElementById('wrapper');
+    var depparent = selector[selector.selectedIndex].id;
+    fetch( url, {
+        method: 'POST',
+        headers:{'Content-type' : 'application/json',
+        'X-CSRFToken': csrftoken
+        },
+        body : JSON.stringify({'department_name': depname,
+                                'department_manager': depmanager,
+                                 'parent_dep': depparent})
+        }).then(function(response){
+            buildList()
+            document.getElementById('form-wrapper').reset()
+            })
+})
+
+
+function deleteItem(item){
+    console.log('clicked',item)
+    var url = `http://127.0.0.1:8000/api/dep-one/${item}/`
+
+
+    fetch( url, {
+        method: 'DELETE',
+        headers:{'Content-type' : 'application/json',
+        'X-CSRFToken': csrftoken
+        }
+        }).then(function(response){
+            buildList()
+            document.getElementById('form-wrapper').reset()
+            })
+
+
+}
+
 
 </script>
 
