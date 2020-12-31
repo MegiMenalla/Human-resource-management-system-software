@@ -6,6 +6,11 @@ from . import views
 from .views import *
 
 urlpatterns = [
+
     path(r'departments/',  DepartmentListCreateView.as_view()),
     path(r'departments/<int:pk>/',  DepartmentRetrieveDeletePut.as_view()),
+
+    path(r'holidays/',  HolidayListCreateView.as_view()),
+    path(r'holidays/<int:pk>/',  HolidayRetrieveDeletePut.as_view()),
+
 ]

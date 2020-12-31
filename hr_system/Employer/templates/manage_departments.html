@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<h4 class="pl-5 pt-5 mt-5 pb-1 bg-warning">Manage departments:</h4>
+<h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage departments:</h4>
 <div class="row container pt-5" >
     <div class="col-7  ">
         <h5 class="pb-3">List of all departments:</h5>
@@ -21,11 +21,12 @@
 
                 <label for="Parent_department">Under the supervision of:</label>
                 <select class="form-control form-control-sm" id="wrapper">
+                    <option value=1>No parent department</option>
 
                 </select>
             </div>
             <button type="submit" class="btn btn-warning mt-5">Submit</button>
-            <button class="btn btn-warning mt-5" onclick="reset">Reset</button>
+            <button class="btn btn-outline-warning mt-5" onclick="reset">Reset</button>
 
         </form>
     </div>

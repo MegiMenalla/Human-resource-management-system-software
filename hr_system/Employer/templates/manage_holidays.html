@@ -1,32 +1,37 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<h4 class="pl-5 pt-5 mt-5 pb-3 bg-success">Manage offical holidays</h4>
-<div class="row pl-5 ml-5" style="position: absolute;top: 150px;left: 500px;">
-    <form>
-        <div class="form-group">
-            <label for="name">Holiday Name</label>
-            <input type="text" class="form-control" id="holiday" placeholder="Holiday name">
-        </div>
-        <div class="pl-4">
-            <input class="form-check-input" type="date" id="data">
-            <label class="form-check-label" for="inlineFormCheck">
-                Date
-            </label>
-        </div>
-        <div class="form-check pl-4 pt-5">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
-                Activate
-            </label>
-        </div>
+<h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage offical holidays</h4>
+<div class="row container pt-5" >
+    <div class="col-7  ">
+        <h5 class="pb-3">List of all holidays:</h5>
+        <ul id="listt" style="list-style: none;">
 
+        </ul>
+    </div>
+    <div class="col-5">
+         <h5 class="pb-3">Create a new holiday:</h5>
+        <form id="form-wrapper">
+            <div class="form-group ">
+                <label for="name" class="pt-3">Holiday Name</label>
+                <input type="text" class="form-control" id="holname" placeholder="Holiday Name" required>
 
-        <button type="submit" class="btn btn-success mt-5">Create new</button>
-        <button type="submit" class="btn btn-secondary mt-5">Edit</button>
-        <button type="submit" class="btn btn-danger mt-5">Delete</button>
-    </form>
+                <label for="day" class="pt-3">Pick a date</label>
+                <input type="date" class="form-control" id="day" placeholder="Holiday date" required>
+
+                <label for="day" class="pt-3">Last active</label>
+                <input type="date" class="form-control" id="lastactive">
+
+                <label for="day" class="pt-3">Active </label>
+                <input type="checkbox" id="active_flag" name="day" value="Active holiday">
+            </div>
+            <button type="submit" class="btn btn-success mt-5">Submit</button>
+            <button class="btn btn-outline-success mt-5" onclick="reset">Reset</button>
+
+        </form>
+    </div>
+
 </div>
-
+<script src="{% static 'js/holiday.js' %}"></script>
 
 {% endblock %}

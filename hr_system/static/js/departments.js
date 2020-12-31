@@ -33,13 +33,13 @@ function buildList(){
     .then((resp)=> resp.json())
     .then(function(data){
         console.log('Data:', data)
-
+        wrapper.innerHTML +=`<option  value="none" selected disabled>No parent department</option>`
         data.forEach((el) => {
             var item = `<option  value="${el.id}" >${el.department_name}</option >`
             wrapper.innerHTML +=item
             var item1 = `<li  id="${el.id}" class="mb-3 " >
-                          <button type="submit" class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="getDepartment(${el.id})">Edit</button>
-                          <button type="submit" class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
+                          <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getDepartment(${el.id})">Edit</button>
+                          <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
                           <strong>  ${el.department_name} </strong>    [Manager: ${el.department_manager }]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
             listt.innerHTML +=item1
 
@@ -66,6 +66,9 @@ form.addEventListener('submit', function(e){
 
         var selector = document.getElementById('wrapper');
         var depparent = selector[selector.selectedIndex].value;
+
+
+
         fetch( url, {
             method: 'POST',
             headers:{'Content-type' : 'application/json',

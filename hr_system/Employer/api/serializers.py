@@ -12,4 +12,13 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_parent_dep_name(obj):
-        return obj.parent_dep.department_name
+        if obj.parent_dep is not None:
+            return obj.parent_dep.department_name
+        else:
+            return 'no parent department'
+
+
+class HolidaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OfficalHolidays
+        fields = ['id','holiday_name', 'active_flag', 'day', 'last_active']

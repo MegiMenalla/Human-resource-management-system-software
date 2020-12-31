@@ -9,6 +9,33 @@ from .serializers import *
 from rest_framework.generics import *
 
 
+# list create for Departments
+class DepartmentListCreateView(generics.ListCreateAPIView):
+    queryset = Departments.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+# get, update delete one specific department
+class DepartmentRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Departments.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+# list create for Holiday dates
+class HolidayListCreateView(generics.ListCreateAPIView):
+    queryset = OfficalHolidays.objects.all()
+    serializer_class = HolidaySerializer
+
+
+# get, update delete one specific holiday
+class HolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    queryset = OfficalHolidays.objects.all()
+    serializer_class = HolidaySerializer
+
+
+'''
+
+
 class DepartmentView(APIView):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
@@ -74,22 +101,7 @@ class OneDepartmentView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# list create
-#
-class DepartmentListCreateView(generics.ListCreateAPIView):
-    queryset = Departments.objects.all()
-    serializer_class = DepartmentSerializer
 
-
-class DepartmentRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Departments.objects.all()
-    serializer_class = DepartmentSerializer
-
-
-
-
-
-'''
 class DepartmentView(generics.ListAPIView):
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
