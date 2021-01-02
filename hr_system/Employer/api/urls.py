@@ -13,4 +13,8 @@ urlpatterns = [
     path(r'holidays/',  HolidayListCreateView.as_view()),
     path(r'holidays/<int:pk>/',  HolidayRetrieveDeletePut.as_view()),
 
+    path(r'users/',  UsersListCreateView.as_view()),
+    path(r'users/<int:pk>/',  UsersRetrieveDeletePutView.as_view()),
+
 ]
+

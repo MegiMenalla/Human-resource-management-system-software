@@ -33,6 +33,18 @@ class HolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HolidaySerializer
 
 
+# list create for employees
+class UsersListCreateView(generics.ListCreateAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+
+
+# get, update delete one specific employee
+class UsersRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+
+
 '''
 
 

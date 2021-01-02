@@ -1,4 +1,3 @@
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -72,7 +71,7 @@ form.addEventListener('submit', function(e){
         fetch( url, {
             method: 'POST',
             headers:{'Content-type' : 'application/json',
-            'X-CSRFToken': csrftoken
+                     'X-CSRFToken': csrftoken
             },
             body : JSON.stringify({'department_name': depname,
                                     'department_manager': depmanager,

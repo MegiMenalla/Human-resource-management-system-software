@@ -21,4 +21,10 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class HolidaySerializer(serializers.ModelSerializer):
     class Meta:
         model = OfficalHolidays
-        fields = ['id','holiday_name', 'active_flag', 'day', 'last_active']
+        fields = ['id', 'holiday_name', 'active_flag', 'day', 'last_active']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id']
