@@ -2,110 +2,70 @@
 {% load static %}
 {% block content %}
 
-<div class="container-fluid pt-5 mt-5 ">
+<div class="container-fluid pt-5 mt-5 pr-5" >
     <div class="row">
         <div class="col-3">
             <h5>Personal information</h5>
-            <p>Date: 25-12-2020</p>
-            <ul>
-                <li class="pb-5 pt-3">Name</li>
-                <li class="pb-5">Last Name</li>
-                <li class="pb-5">Job position</li>
-                <li class="pb-5">Department</li>
-                <li class="pb-5">Days left in the current position</li>
-                <li class="pb-5">Days left to request permission</li>
-                <li class="pb-5">Nearest future holiday</li>
+            <p>Date & Time: {% now "SHORT_DATETIME_FORMAT" %}</p>
+            <ul style="list-style:none ">
+                <li class="pb-3 pt-3" id="name"></li>
+                <li class="pb-3" id="jobid">Job position</li>
+                <li class="pb-3" id="salary">Salary</li>
+                <li class="pb-3" id="phone">Phone</li>
+                <li class="pb-3" id="positionLeft">Days left in the current position</li>
+                <li class="pb-3" id="premissionLeft">Days left to request permission</li>
+                <li class="pb-3" id="futureHoliday">Nearest future holiday</li>
+
             </ul>
         </div>
 
-        <div class="col-5">
+        <div class="col-6">
             <div class="row">
                 <div class="col ">
                     <h3>Checked: </h3>
-                    <table class="table" style="width:90%;background-color:white;">
-                        <tr>
-                            <th>Department</th>
-                            <th>Emplyee name</th>
-                            <th>From</th>
-                            <th></th>
-                            <th>To</th>
-                            <th></th>
-                        </tr>
+                    <table id="checkedList" class="table" style="width:90%;background-color:white;">
 
-                        <tr>
-                            <td>Dep 1</td>
-                            <td>Megi</td>
-                            <td>Wed</td>
-                            <td>1:00</td>
-                            <td>Friday</td>
-                            <td>1:00</td>
-                            <td><a class="btn  btn-sm btn-success">Approved</a></td>
-
-                        </tr>
-                        <tr>
-                            <td>Dep 1</td>
-                            <td>Megi</td>
-                            <td>Wed</td>
-                            <td>1:00</td>
-                            <td>Friday</td>
-                            <td>1:00</td>
-                            <td><a class="btn btn-sm btn-danger">Denied</a></td>
-                        </tr>
                     </table>
                 </div>
             </div>
 
-            <div class="row mt-5">
-                <div class="col">
-                    <h3>Unchecked</h3>
-                    <table class="table" style="width:90%;background-color:white;">
-                        <tr>
-                            <th>Department</th>
-                            <th>Emplyee name</th>
-                            <th>From</th>
-                            <th></th>
-                            <th>To</th>
-                            <th></th>
-                            <th></th>
+            <div class="row">
+                <div class="col ">
+                    <h3>Unchecked: </h3>
+                    <table id="uncheckedList" class="table" style="width:90%;background-color:white;">
 
-                        </tr>
-
-                        <tr>
-                            <td>Dep 1</td>
-                            <td>Megi</td>
-                            <td>Wed</td>
-                            <td>1:00</td>
-                            <td>Friday</td>
-                            <td>1:00</td>
-                            <td><a class="btn btn-sm btn-outline-danger">Cancel</a></td>
-
-                        </tr>
-                        <tr>
-                            <td>Dep 1</td>
-                            <td>Megi</td>
-                            <td>Wed</td>
-                            <td>1:00</td>
-                            <td>Friday</td>
-                            <td>1:00</td>
-                            <td><a class="btn btn-sm btn-outline-danger">Cancel</a></td>
-                        </tr>
                     </table>
                 </div>
             </div>
 
         </div>
+        <!-- make a request -->
+        <div class="col-3 pl-3 pt-5  pb-5 bg-info">
+            <h5>Create a request</h5>
+            <form id="form-wrapper">
+                <div class="form-group">
+                    <label class="pt-3">Start date</label>
+                    <input type="date" class="form-control" id="startd">
 
-        <div class="col-4">
+                    <label class="pt-3">End date</label>
+                    <input type="date" class="form-control" id="endd">
 
-            <a class="btn btn-success btn-lg  ml-5 mb-5"> << ADD REQUEST >></a>
+                    <label class="pt-3">Start hour [default 00:00:00]</label>
+                    <input type="time" class="form-control" id="starth">
 
-            <img src="https://image.freepik.com/free-vector/pie-chart-infographic-design_23-2147489914.jpg"
-                 style="width:400px;">
+                    <label class="pt-3">End hour [default 23:59:59]</label>
+                    <input type="time" class="form-control" id="endh">
+                </div>
+
+                <button onclick="postRequest({{request.user.id}})" class="btn btn-outline-dark btn-lg mt-5"> ADD
+                    REQUEST
+                </button>
+            </form>
         </div>
-
-
+        <!-- end make a request -->
     </div>
-</div>
 
+</div>
+<script src="{% static 'js/request.js' %}"></script>
 
 {% endblock %}

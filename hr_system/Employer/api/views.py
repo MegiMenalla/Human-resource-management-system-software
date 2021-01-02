@@ -45,6 +45,18 @@ class UsersRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
+# list create requests
+class RequestListCreateView(generics.ListCreateAPIView):
+    queryset = AllowanceRequest.objects.all()
+    serializer_class = RequestSerializer
+
+
+# get, update delete one specific request
+class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AllowanceRequest.objects.all()
+    serializer_class = RequestSerializer
+
+
 '''
 
 

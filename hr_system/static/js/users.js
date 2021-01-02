@@ -35,7 +35,7 @@ function buildList(){
     fetch(urldep)
     .then((resp)=> resp.json())
     .then(function(data){
-        console.log('Data:', data)
+        //console.log('Data:', data)
         data.forEach((el) => {
             var item = `<option  value="${el.id}" >${el.department_name}</option >`
             wrapper.innerHTML +=item
@@ -53,8 +53,7 @@ function buildList(){
         console.log('Data:', data)
 
         data.forEach((el) => {
-            var item = `<option  value="${el.id}" >${el.department_name}</option >`
-            wrapper.innerHTML +=item
+
             var item1 = `<li  id="${el.id}" class="mb-3 " >
                           <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getUser(${el.id})">Edit</button>
                           <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteUser(${el.id})">X</button>
@@ -82,9 +81,8 @@ function getUser(user){
             }
             }).then((resp)=> resp.json())
             .then(function(response){
-            console.log(response)
-            console.log(response.data)
-            console.log(response.department_id)
+
+            //console.log(response.department_id)
                 reset()
                 document.getElementById('name').value = response.first_name
                 document.getElementById('surname').value = response.last_name

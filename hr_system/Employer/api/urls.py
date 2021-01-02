@@ -16,5 +16,8 @@ urlpatterns = [
     path(r'users/',  UsersListCreateView.as_view()),
     path(r'users/<int:pk>/',  UsersRetrieveDeletePutView.as_view()),
 
+    path(r'requests/',  RequestListCreateView.as_view()),
+    path(r'requests/<int:pk>/',  RequestRetrieveDeletePutView.as_view()),
+
 ]
 

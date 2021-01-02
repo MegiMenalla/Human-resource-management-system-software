@@ -56,7 +56,6 @@ class OfficalHolidays(models.Model):
 
 class AllowanceRequest(models.Model):
     user_id = models.ForeignKey(Users, null=True, on_delete=models.CASCADE, related_name='applicant')
-    approver_id = models.ForeignKey(Users, null=True, on_delete=models.CASCADE, related_name='approver')
 
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
@@ -65,6 +64,7 @@ class AllowanceRequest(models.Model):
 
     approval_flag = models.BooleanField(default=False)
     checked = models.BooleanField(default=False)
+    description = models.TextField(max_length=500, null=True, blank=True)
 
 
 class Profile(models.Model):

@@ -28,3 +28,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id']
+
+
+# serializer to make a request
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AllowanceRequest
+        fields = ['id', 'user_id', 'start_date', 'end_date', 'start_hour', 'end_hour', 'approval_flag', 'checked',
+                  'description']

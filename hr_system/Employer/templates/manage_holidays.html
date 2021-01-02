@@ -13,7 +13,6 @@
          <h5 class="pb-3">Create a new holiday:</h5>
         <form id="form-wrapper">
             <div class="form-group ">
-                <label for="name" class="pt-3">Holiday Name</label>
                 <input type="text" class="form-control" id="holname" placeholder="Holiday Name" required>
 
                 <label for="day" class="pt-3">Pick a date</label>
@@ -22,15 +21,13 @@
                 <label for="day" class="pt-3">Last active</label>
                 <input type="date" class="form-control" id="lastactive">
 
-                <label for="day" class="pt-3">Active </label>
+                <label for="day" class="pt-3 pr-3">Active </label>
                 <input type="checkbox" id="active_flag" name="day" value="Active holiday">
             </div>
-            <button type="submit" class="btn btn-success mt-5">Submit</button>
+            <button type="submit" class="btn btn-success mt-5 mr-3">Submit</button>
             <button class="btn btn-outline-success mt-5" onclick="reset">Reset</button>
-
         </form>
     </div>
-
 </div>
 <script src="{% static 'js/holiday.js' %}"></script>
 

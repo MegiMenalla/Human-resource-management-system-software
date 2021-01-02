@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
 <h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage employees</h4>
-<div class="row pl-5 container" >
-    <div class="col-6">
+<div class="row container pl-5  " >
+    <div class="col-7 pt-5">
         <h5 class="pb-3">My employees:</h5>
         <ul id="listt" style="list-style: none;">
 
@@ -11,33 +11,28 @@
 
     </div>
 
-     <div class="col-6">
+     <div class="col-5 mt-5">
+         <h5 class="pb-3 pt-0">Create a new employee:</h5>
          <form id="form-wrapper">
             <div class="form-group">
 
-                <label for="name">First Name</label>
                 <input type="text" class="form-control" id="name" placeholder="First name">
 
-                <label for="surname">Last Name</label>
-                <input type="text" class="form-control" id="surname" placeholder="Last name">
+                <input type="text" class="form-control mt-4" id="surname" placeholder="Last name">
 
-                <label for="salary">Salary</label>
-                <input type="number" class="form-control" id="salary" placeholder="Salary">
+                <input type="number" class="form-control mt-4" id="salary" placeholder="Salary">
 
-                <label for="phone">Phone number</label>
-                <input type="tel" class="form-control" id="phone" placeholder="Phone number">
+                <input type="tel" class="form-control mt-4" id="phone" placeholder="Phone number">
 
-                <label for="date" class="pt-3">Hire date</label>
-                <input type="date" class="form-control" id="hire_date" placeholder="Hire date">
+                <input type="date" class="form-control mt-4" id="hire_date" placeholder="Hire date">
 
-                <label for="dep" class="pt-3">Choose Department</label>
-                <select class="form-control form-control-sm" id="wrapper">
+                <select class="form-control form-control-sm mt-4" id="wrapper">
 
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success mt-1">Submit</button>
-            <button  class="btn btn-outline-secondary mt-1" onclick="reset()">Reset</button>
+            <button type="submit" class="btn btn-success mt-5 mr-3">Submit</button>
+            <button  class="btn btn-outline-secondary mt-5" onclick="reset()">Reset</button>
         </form>
     </div>
 
