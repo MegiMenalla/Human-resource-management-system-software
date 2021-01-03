@@ -2,19 +2,12 @@
 {% load static %}
 {% block content %}
 
-<div class="container-fluid pt-5 mt-5 pr-5" >
+<div class="container-fluid pt-5 mt-5 pr-5">
     <div class="row">
         <div class="col-3">
-            <h5>Personal information</h5>
-            <p>Date & Time: {% now "SHORT_DATETIME_FORMAT" %}</p>
-            <ul style="list-style:none ">
-                <li class="pb-3 pt-3" id="name"></li>
-                <li class="pb-3" id="jobid">Job position</li>
-                <li class="pb-3" id="salary">Salary</li>
-                <li class="pb-3" id="phone">Phone</li>
-                <li class="pb-3" id="positionLeft">Days left in the current position</li>
-                <li class="pb-3" id="premissionLeft">Days left to request permission</li>
-                <li class="pb-3" id="futureHoliday">Nearest future holiday</li>
+            <button class="btn btn-outline-dark mb-3 ml-4" onclick="infoList({{request.user.id}})">Personal information</button>
+
+            <ul style="list-style:none" id="listt">
 
             </ul>
         </div>
@@ -51,15 +44,16 @@
                     <input type="date" class="form-control" id="endd">
 
                     <label class="pt-3">Start hour [default 00:00:00]</label>
-                    <input type="time" class="form-control" id="starth">
+                    <input type="time" class="form-control" id="starth" value="00:00">
 
                     <label class="pt-3">End hour [default 23:59:59]</label>
-                    <input type="time" class="form-control" id="endh">
+                    <input type="time" class="form-control" id="endh" value="23:59">
                 </div>
 
                 <button onclick="postRequest({{request.user.id}})" class="btn btn-outline-dark btn-lg mt-5"> ADD
                     REQUEST
                 </button>
+
             </form>
         </div>
         <!-- end make a request -->
