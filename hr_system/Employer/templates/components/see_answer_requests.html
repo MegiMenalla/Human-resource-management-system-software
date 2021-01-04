@@ -1,71 +1,23 @@
-<div class="row" >
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="row container-fluid pt-5 mt-5 pl-5" >
+    <div id="test"></div>
     <div class="col" >
         <h3>For approval: </h3>
-        <table class="table" style="width:70%;background-color:white;">
-            <tr>
-                <th>Department</th>
-                <th>Emplyee name</th>
-                <th>From</th>
-                <th></th>
-                <th>To</th>
-                <th></th>
-                <th></th>
-            </tr>
+        <table class="table" style="width:100%;background-color:white;" id="for_approval">
 
-            <tr>
-                <td>Dep 1</td>
-                <td>Megi</td>
-                <td>Wed</td>
-                <td>1:00</td>
-                <td>Friday</td>
-                <td>1:00</td>
-                <td><a class="btn btn-success">Approve</a></td>
-                <td><a class="btn btn-danger">Deny</a></td>
-            </tr>
-            <tr>
-                <td>Dep 1</td>
-                <td>Megi</td>
-                <td>Wed</td>
-                <td>1:00</td>
-                <td>Friday</td>
-                <td>1:00</td>
-                <td><a class="btn btn-success">Approve</a></td>
-                <td><a class="btn btn-danger">Deny</a></td>
-            </tr>
         </table>
     </div>
 </div>
-<div class="row mt-5 pt-5">
+<div class="row container-fluid pt-5 mt-5 pl-5">
     <div class="col">
-        <h3>Approved:</h3>
-        <table class="table"  style="width:70%;background-color:white;">
-            <tr>
-                <th>Department</th>
-                <th>Emplyee name</th>
-                <th>From</th>
-                <th></th>
-                <th>To</th>
-                <th></th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>Dep 1</td>
-                <td>Megi</td>
-                <td>Wed</td>
-                <td>1:00</td>
-                <td>Friday</td>
-                <td>1:00</td>
-                <td>yes</td>
-            </tr>
-            <tr>
-                <td>Dep 1</td>
-                <td>Megi</td>
-                <td>Wed</td>
-                <td>1:00</td>
-                <td>Friday</td>
-                <td>1:00</td>
-                <td>no</td>
-            </tr>
+        <h3>Checked:</h3>
+        <table class="table"  style="width:100%;background-color:white;" id="checked_requests">
+
         </table>
     </div>
 </div>
+<script src="{% static 'js/manager.js' %}"></script>
+
+{% endblock%}

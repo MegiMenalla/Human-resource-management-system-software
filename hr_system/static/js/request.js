@@ -45,7 +45,6 @@ function postRequest(userID){
     var endmoment= moment(endd)
 
     var starthour = moment(starth,"hh:mm")
-
     var endhour = moment(endh,"hh:mm")
 
     //alert(starthour.isBefore(endhour))
@@ -77,6 +76,7 @@ function postRequest(userID){
                 })
             }).then(function(response){
                 reset();
+                buildList()
             })
         }
     }else{
@@ -98,6 +98,7 @@ function postRequest(userID){
             })
         }).then(function(response){
             reset();
+            buildList()
         })
 
     }
@@ -112,7 +113,6 @@ buildList()
 function buildList(){
 
     var checkedList = document.getElementById('checkedList')
-
     var uncheckedList = document.getElementById('uncheckedList')
 
     var url = `http://127.0.0.1:8000/api/requests/`
@@ -126,6 +126,7 @@ function buildList(){
                     <th></th>
                     <th>To</th>
                     <th></th>
+                    <th>Reason</th>
                     <th>Status</th>
                 </tr>`
         checkedList.innerHTML +=checked
@@ -152,7 +153,9 @@ function buildList(){
                                     <td>${el.start_hour}</td>
                                     <td>${el.end_date}</td>
                                     <td>${el.end_hour}</td>
+                                    <td style="width: 25%;">${el.description}</td>
                                     <td>${sts}</td>
+
                                 </tr>`
 
                 checkedList.innerHTML +=checked
@@ -227,27 +230,6 @@ function deleteRequest(req_id){
 
 }
 
-
-
-
-var sd=null;
-var sh=null;
-// get one specific request
-function getRequest(user){
-    var url = `http://127.0.0.1:8000/api/requests/${user}/`
-
-        fetch( url, {
-            method: 'GET',
-            headers:{'Content-type' : 'application/json',
-            'X-CSRFToken': csrftoken
-            }
-            }).then((resp)=> resp.json())
-            .then(function(response){
-                sd = response.start_date
-                sh = response.start_hour
-
-                })
-    }
 
 
 

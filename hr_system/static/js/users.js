@@ -144,7 +144,7 @@ form.addEventListener('submit', function(e){
 })
 
 
-// update
+// update //
 function  putUser(id){
     var url = `http://127.0.0.1:8000/api/users/${id}/`
     var name = document.getElementById('name').value;

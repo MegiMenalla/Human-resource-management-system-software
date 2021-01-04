@@ -64,7 +64,7 @@ class AllowanceRequest(models.Model):
 
     approval_flag = models.BooleanField(default=False)
     checked = models.BooleanField(default=False)
-    description = models.TextField(max_length=500, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
 
 
 class Profile(models.Model):

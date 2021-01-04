@@ -36,3 +36,5 @@ class RequestSerializer(serializers.ModelSerializer):
         model = AllowanceRequest
         fields = ['id', 'user_id', 'start_date', 'end_date', 'start_hour', 'end_hour', 'approval_flag', 'checked',
                   'description']
+
+

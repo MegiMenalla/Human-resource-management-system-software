@@ -13,14 +13,19 @@ from .models import *
 # Create your views here.
 
 
-# @api_view(['GET'])
-def test(request):
-    return HttpResponse('hi')
-
-
 def emp_page(request):
     data = {}
     return render(request, 'emp_page.html', data)
+
+
+def manager_page(request):
+    data = {}
+    return render(request, 'manager_page.html', data)
+
+
+def see_answer_requests(request):
+    data = {}
+    return render(request, 'components/see_answer_requests.html', data)
 
 
 def manage_holidays(request):

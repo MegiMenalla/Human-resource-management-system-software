@@ -5,7 +5,6 @@ from . import views
 
 
 urlpatterns = [
-    path(r'test/', views.test),
     path(r'hr/<int:id>/', views.hr, name="hr"),
     path(r'logini/', views.logini, name="logini"),
     path(r'logoutUser/', views.logoutUser, name="logoutUser"),
@@ -14,5 +13,6 @@ urlpatterns = [
     path(r'manage_employees/', views.manage_employees, name="manage_employees"),
     path(r'manage_holidays/', views.manage_holidays, name="manage_holidays"),
     path(r'emp_page/', views.emp_page, name="emp_page"),
-
+    path(r'manager_page/', views.manager_page, name="manager_page"),
+    path(r'see_answer_requests/', views.see_answer_requests, name="see_answer_requests"),
 ]
