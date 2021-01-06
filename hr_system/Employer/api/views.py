@@ -57,9 +57,65 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RequestSerializer
 
 
+# list create roles
+class RoleListCreateView(generics.ListCreateAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+
+# get, update delete one specific role
+class RoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+
+# list create user-role-relationship
+class UserRoleListCreateView(generics.ListCreateAPIView):
+    queryset = UserRole.objects.all()
+    serializer_class = UserRoleSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = UserRoleSerializer(data=request.data)
+        if serializer.is_valid():
+            current_time = datetime.date.today()
+            r = serializer.data.get('role')
+            u = serializer.data.get('user')
+            life = Role.objects.get(id=r)
+            l = datetime.date(current_time.year + life.lifespan, 1, 1)
+            u = Users.objects.get(id=u)
+            r = Role.objects.get(id=r)
+            role = UserRole(user=u, role=r, end_date=l)
+            role.save()
+            return Response(UserRoleSerializer(role).data, status=status.HTTP_200_OK)
+
+
+# get, update delete one specific role
+class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserRole.objects.all()
+    serializer_class = UserRoleSerializer
+
+
+# list create Profiles
+class ProfileListCreateView(generics.ListCreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+# get, update delete one specific Profile
+class ProfileViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+
+
+
+
+
+
+
+
 '''
-
-
 class DepartmentView(APIView):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]

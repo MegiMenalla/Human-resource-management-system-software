@@ -19,5 +19,15 @@ urlpatterns = [
     path(r'requests/',  RequestListCreateView.as_view()),
     path(r'requests/<int:pk>/',  RequestRetrieveDeletePutView.as_view()),
 
+    path(r'roles/',  RoleListCreateView.as_view()),
+    path(r'roles/<int:pk>/',  RoleViewRetrieveDeletePutView.as_view()),
+
+    path(r'user_role/',  UserRoleListCreateView.as_view()),
+    path(r'user_role/<int:pk>/',  UserRoleViewRetrieveDeletePutView.as_view()),
+
+    path(r'profile/',  ProfileListCreateView.as_view()),
+    path(r'profile/<int:pk>/',  ProfileViewRetrieveDeletePutView.as_view()),
+
+
 ]
 

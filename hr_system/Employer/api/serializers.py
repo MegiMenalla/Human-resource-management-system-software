@@ -38,3 +38,22 @@ class RequestSerializer(serializers.ModelSerializer):
                   'description']
 
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = ['role', 'min_salary', 'max_allowance_no', 'lifespan']
+
+
+class UserRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserRole
+        fields = ['id','user', 'role', 'end_date']
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id','user', 'account', 'email', 'password']
+
+
+

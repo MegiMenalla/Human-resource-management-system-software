@@ -7,30 +7,14 @@
         <div class="sidebar-content">
             <div class="sidebar-header">
                 <div class="user-info">
-          <span class="user-name">Bob
+                    <span class="user-name">Bob
             <strong>HR Guy</strong>
           </span>
-                    <span class="user-role">Administrator</span>
-                    <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Online</span>
-          </span>
+
+
                 </div>
             </div>
-            <!-- sidebar-header  -->
-            <div class="sidebar-search">
-                <div>
-                    <div class="input-group">
-                        <input type="text" class="form-control search-menu" placeholder="Search...">
-                        <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- sidebar-search  -->
+
             <div class="sidebar-menu">
                 <ul>
                     <li class="header-menu">
@@ -43,19 +27,25 @@
                             <span>Manage Departments</span>
                         </a>
                     </li>
-                    <li >
-                        <a href="{% url 'manage_employees' %}"  target="_blank">
+                    <li>
+                        <a href="{% url 'manage_employees' %}" target="_blank">
                             <i class="far fa-gem"></i>
                             <span>Manage Employees</span>
                         </a>
 
                     </li>
-                     <li >
-                        <a href="{% url 'manage_holidays' %}"  target="_blank">
+                    <li>
+                        <a href="{% url 'manage_holidays' %}" target="_blank">
                             <i class="far fa-gem"></i>
                             <span>Manage Holidays</span>
                         </a>
 
+                    </li>
+                    <li>
+                        <a href="{% url 'see_answer_requests' %}" target="_blank">
+                            <i class="far fa-gem"></i>
+                            <span>Requests from managers</span>
+                        </a>
                     </li>
                     <li>
                         <a href="#">
@@ -64,7 +54,7 @@
                         </a>
 
                     </li>
-                    <li >
+                    <li>
                         <a href="#">
                             <i class="fa fa-globe"></i>
                             <span>Maps</span>
@@ -98,41 +88,7 @@
 
     </nav>
     <!-- sidebar-wrapper  -->
-    <main class="page-content mt-5">
-        <div class="container-fluid mt-5">
-            <div class="row-fluid">
-                    {% include 'components/see_answer_requests.html' %}
-            </div>
-            <div id="list-wrapper">
 
-            </div>
-
-
-        </div>
-    </main>
-    <!-- page-content" -->
 </div>
-
-
-<script type="text/javascript">
-    /* buildList()
-    function buildList(){
-        var wrapper = document.getElementById('list-wrapper')
-        wrapper.innerHTML = ''
-        var url = 'http://127.0.0.1:8000/api/dep-create/'
-        fetch(url)
-        .then((resp)=> resp.json())
-        .then(function(data){
-            console.log('Data:', data)
-
-            data.forEach((el) => {
-                let item = `<div id="${el.url}" >${el.department_name}</div>`
-                wrapper.innerHTML +=item
-             });
-        })
-    }
-*/
-</script>
-
 
 {% endblock%}
