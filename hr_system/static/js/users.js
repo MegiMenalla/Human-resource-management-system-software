@@ -28,6 +28,8 @@ function buildList(){
     wrapper.innerHTML = ''
     var listt = document.getElementById('listt')
     listt.innerHTML = ''
+    var rl = document.getElementById('roles')
+    rl.innerHTML = ''
 
 
     // list the departments
@@ -39,6 +41,21 @@ function buildList(){
         data.forEach((el) => {
             var item = `<option  value="${el.id}" >${el.department_name}</option >`
             wrapper.innerHTML +=item
+         })
+
+    })
+
+
+
+    // list the roles
+    var urlr = 'http://127.0.0.1:8000/api/roles/'
+    fetch(urlr)
+    .then((resp)=> resp.json())
+    .then(function(data){
+        //console.log('Data:', data)
+        data.forEach((el) => {
+            var itemr = `<option  value="${el.id}" >${el.role}</option >`
+            rl.innerHTML +=itemr
          })
 
     })
@@ -69,7 +86,7 @@ function buildList(){
 
 
 
-// get
+// get one user
 var id = null;
 function getUser(user){
     var url = `http://127.0.0.1:8000/api/users/${user}/`
@@ -102,7 +119,7 @@ function reset(){
 }
 
 
-// post
+// create a user if he/she doesn't already exists
 var form = document.getElementById('form-wrapper')
 form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -118,9 +135,13 @@ form.addEventListener('submit', function(e){
         var salary = document.getElementById('salary').value;
         var phone_no = document.getElementById('phone').value;
         var hire_date = document.getElementById('hire_date').value;
+        var email = document.getElementById('email').value;
         var selector = document.getElementById('wrapper');
         var dep = selector[selector.selectedIndex].value;
+        var selector2 = document.getElementById('roles');
+        var role = selector2[selector2.selectedIndex].value;
 
+        // create a record on users table
         fetch(url, {
             method : 'POST',
              headers:{'Content-type' : 'application/json',
@@ -139,12 +160,43 @@ form.addEventListener('submit', function(e){
             reset();
         })
 
+        alert('User was created. Click ok to assign him/her the job position.')
+        // create a record on user-roles table
+        var url1 = `http://127.0.0.1:8000/api/user_role/`
+        fetch(url1, {
+            method : 'POST',
+             headers:{'Content-type' : 'application/json',
+                     'X-CSRFToken': csrftoken
+            },
+            body : JSON.stringify({
+                'role':role
+            })
+        })
+
+        alert('User was created. Click ok to assign him/her the job position.')
+        // create a record on profile table
+        var url1 = `http://127.0.0.1:8000/api/profile/`
+        fetch(url1, {
+            method : 'POST',
+             headers:{'Content-type' : 'application/json',
+                     'X-CSRFToken': csrftoken
+            },
+            body : JSON.stringify({
+
+            })
+        })
+
+
+
+
+
+
     }
 
 })
 
 
-// update //
+// update a user
 function  putUser(id){
     var url = `http://127.0.0.1:8000/api/users/${id}/`
     var name = document.getElementById('name').value;
@@ -190,6 +242,9 @@ function deleteUser(id){
            reset()
             })
 }
+
+
+
 
 
 

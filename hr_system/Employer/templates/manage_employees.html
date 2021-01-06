@@ -11,32 +11,47 @@
 
     </div>
 
-     <div class="col-5 mt-5">
+     <div class="col-5 mt-2">
          <h5 class="pb-3 pt-0">Create a new employee:</h5>
          <form id="form-wrapper">
             <div class="form-group">
 
-                <input type="text" class="form-control" id="name" placeholder="First name">
+                <input type="text" class="form-control" id="name" placeholder="First name" required>
 
-                <input type="text" class="form-control mt-4" id="surname" placeholder="Last name">
+                <input type="text" class="form-control mt-2" id="surname" placeholder="Last name" required>
 
-                <input type="number" class="form-control mt-4" id="salary" placeholder="Salary">
+                <input type="number" class="form-control mt-2" id="salary" placeholder="Salary" required>
 
-                <input type="tel" class="form-control mt-4" id="phone" placeholder="Phone number">
+                <input type="tel" class="form-control mt-2" id="phone" placeholder="Phone number" required>
 
-                <input type="date" class="form-control mt-4" id="hire_date" placeholder="Hire date">
+                <label class=" mt-2">Hire date (default: today)</label>
+                <input type="date" class="form-control" id="hire_date" placeholder="Hire date">
 
-                <select class="form-control form-control-sm mt-4" id="wrapper">
+                <label class=" mt-2">Choose Department</label>
+                <select class="form-control form-control-sm" id="wrapper" required>
 
                 </select>
+
+
+                <!--profile table -->
+                <input type="email" class="form-control mt-2" placeholder="Email address" id="email" required>
+
+
+                <!--user role table -->
+                <label class=" mt-2">Job position</label>
+
+                <select class="form-control form-control-sm" id="roles">
+
+                </select>
+
+
+
             </div>
 
-            <button type="submit" class="btn btn-success mt-5 mr-3">Submit</button>
-            <button  class="btn btn-outline-secondary mt-5" onclick="reset()">Reset</button>
+            <button type="submit" class="btn btn-success mt-1 mr-3">Submit</button>
+            <button  class="btn btn-outline-secondary mt-1" onclick="reset()">Reset</button>
         </form>
     </div>
-
-
 </div>
 <script src="{% static 'js/users.js' %}"></script>
 

@@ -15,4 +15,5 @@ urlpatterns = [
     path(r'emp_page/', views.emp_page, name="emp_page"),
     path(r'manager_page/', views.manager_page, name="manager_page"),
     path(r'see_answer_requests/', views.see_answer_requests, name="see_answer_requests"),
+    path(r'manage_jobs/', views.manage_jobs, name="manage_jobs"),
 ]

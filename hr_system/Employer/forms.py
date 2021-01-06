@@ -11,10 +11,3 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['email', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }

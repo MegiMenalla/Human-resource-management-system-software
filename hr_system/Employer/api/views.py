@@ -1,12 +1,10 @@
+from datetime import datetime
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from ..models import *
 from .serializers import *
-from rest_framework.generics import *
 
 
 # list create for Departments
@@ -64,7 +62,7 @@ class RoleListCreateView(generics.ListCreateAPIView):
 
 
 # get, update delete one specific role
-class RoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+class RoleRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
@@ -79,10 +77,10 @@ class UserRoleListCreateView(generics.ListCreateAPIView):
         if serializer.is_valid():
             current_time = datetime.date.today()
             r = serializer.data.get('role')
-            u = serializer.data.get('user')
+            u = Users.objects.all().last()
             life = Role.objects.get(id=r)
             l = datetime.date(current_time.year + life.lifespan, 1, 1)
-            u = Users.objects.get(id=u)
+
             r = Role.objects.get(id=r)
             role = UserRole(user=u, role=r, end_date=l)
             role.save()
@@ -93,6 +91,18 @@ class UserRoleListCreateView(generics.ListCreateAPIView):
 class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = ProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            current_time = datetime.date.today()
+            email = serializer.data.get('email')
+            u = Users.objects.all().last()
+            r = Role.objects.all().last()
+
+            profile = Profile()
+            profile.save()
+            return Response(ProfileSerializer(profile).data, status=status.HTTP_200_OK)
 
 
 # list create Profiles

@@ -42,6 +42,10 @@ def manage_departments(request):
     data = {}
     return render(request, 'manage_departments.html', data)
 
+def manage_jobs(request):
+    data = {}
+    return render(request, 'manage_jobs.html', data)
+
 
 def hr(request, id):
     data = {
@@ -80,7 +84,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
-            Profil.objects.create(
+            Profile.objects.create(
                 user=user,
             )
             messages.success(request, 'Profili u kijua: ')
