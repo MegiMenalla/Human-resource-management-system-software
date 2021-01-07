@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status, mixins
 from rest_framework.authentication import TokenAuthentication
@@ -35,6 +35,28 @@ class HolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
 class UsersListCreateView(generics.ListCreateAPIView):
     queryset = Users.objects.all()
     serializer_class = UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            fname = serializer.data.get('first_name')
+            lname = serializer.data.get('last_name')
+            sal = serializer.data.get('salary')
+            phone = serializer.data.get('phone_no')
+            hire_date = serializer.data.get('hire_date')
+            email = serializer.data.get('email')
+            dep = serializer.data.get('department_id')
+            dep = Departments.objects.get(id=dep)
+
+            user_acc = User(username=email)
+            user_acc.set_password(lname)
+            user_acc.save()
+            user1 = Users(first_name=fname, last_name=lname,
+                          salary=sal, phone_no=phone, hire_date=hire_date,
+                          department_id=dep, email=email, user=user_acc)
+            user1.id = user_acc.id
+            user1.save()
+            return Response(UserSerializer(user1).data, status=status.HTTP_200_OK)
 
 
 # get, update delete one specific employee
@@ -92,20 +114,8 @@ class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
 
-    def create(self, request, *args, **kwargs):
-        serializer = ProfileSerializer(data=request.data)
-        if serializer.is_valid():
-            current_time = datetime.date.today()
-            email = serializer.data.get('email')
-            u = Users.objects.all().last()
-            r = Role.objects.all().last()
 
-            profile = Profile()
-            profile.save()
-            return Response(ProfileSerializer(profile).data, status=status.HTTP_200_OK)
-
-
-# list create Profiles
+''''# list create Profiles
 class ProfileListCreateView(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -117,13 +127,7 @@ class ProfileViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
 
 
-
-
-
-
-
-
-
+'''
 
 '''
 class DepartmentView(APIView):

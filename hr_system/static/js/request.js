@@ -201,7 +201,7 @@ function deleteRequest(req_id){
                 sdm = moment(a, "YYYY-MM-DDhh:mm")
                 sdm.subtract(48,"hours");
                 if(moment().isAfter(sdm)){
-                    alert("Oops!   You cannot cancel now. Too late.")
+                    alert("Oops! You cannot cancel now. Too late.")
                     return;
                 }else{
                     fetch( url, {

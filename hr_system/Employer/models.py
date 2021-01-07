@@ -24,6 +24,7 @@ class Users(models.Model):
     hire_date = models.DateField(auto_now_add=True)
     department_id = models.ForeignKey(Departments, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=100, null=True, unique=True)
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.first_name
@@ -67,18 +68,9 @@ class AllowanceRequest(models.Model):
     description = models.TextField(max_length=1000, null=True, blank=True)
 
 
-class Profile(models.Model):
+'''class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     account = models.OneToOneField(Users, on_delete=models.CASCADE)
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profil.save()
-
     def __str__(self):
-        return self.account.name
+        return self.account.first_name'''

@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from .decorators import unauthenticated_user
 from .forms import CreateUserForm
 from .models import *
 
@@ -42,6 +43,7 @@ def manage_departments(request):
     data = {}
     return render(request, 'manage_departments.html', data)
 
+
 def manage_jobs(request):
     data = {}
     return render(request, 'manage_jobs.html', data)
@@ -63,9 +65,17 @@ def logini(request):
 
         if user is not None:
             login(request, user)
-            return redirect('hr', user.id)
+            if request.user.is_authenticated:
+                role = UserRole.objects.get(user=request.user.id)
+                role = role.role
+
+                if role == 1:
+                    return redirect('hr')
+                elif role == 2:
+                    return redirect('manager_page')
+                else:
+                    return redirect('emp_page')
         else:
-            messages.info(request, 'Emri ose kodi eshte gabim!')
             return render(request, 'registration/login.html', data)
     else:
         return render(request, 'registration/login.html', data)
@@ -76,7 +86,7 @@ def logoutUser(request):
     return redirect('logini')
 
 
-def register(request):
+'''def register(request):
     form = CreateUserForm()
 
     if request.method == 'POST':
@@ -96,3 +106,4 @@ def register(request):
 
     }
     return render(request, 'registration/register.html', data)
+'''

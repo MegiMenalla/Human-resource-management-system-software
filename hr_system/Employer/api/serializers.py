@@ -27,7 +27,7 @@ class HolidaySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id']
+        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id','email', 'user']
 
 
 # serializer to make a request
@@ -50,7 +50,8 @@ class UserRoleSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'role', 'end_date']
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+'''class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['id', 'user', 'account']
+'''

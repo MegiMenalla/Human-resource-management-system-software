@@ -153,6 +153,7 @@ form.addEventListener('submit', function(e){
                 'salary':salary,
                 'phone_no': phone_no,
                 'hire_date':hire_date,
+                'email':email,
                 'department_id':dep
             })
         }).then(function(response){
@@ -172,22 +173,6 @@ form.addEventListener('submit', function(e){
                 'role':role
             })
         })
-
-        alert('User was created. Click ok to assign him/her the job position.')
-        // create a record on profile table
-        var url1 = `http://127.0.0.1:8000/api/profile/`
-        fetch(url1, {
-            method : 'POST',
-             headers:{'Content-type' : 'application/json',
-                     'X-CSRFToken': csrftoken
-            },
-            body : JSON.stringify({
-
-            })
-        })
-
-
-
 
 
 
