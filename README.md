@@ -1,8 +1,11 @@
 # Human-resource-management-system-software
 
 http://127.0.0.1:8000/emp/hr/ --> on the left sidebar, first five links are functional (half functional).
+
 http://127.0.0.1:8000/emp/manage_employees/ --> creates an employee, a User account and assigns a role (adds a record to the user role table)
+
 http://127.0.0.1:8000/emp/manager_page/# --> on the left sidebar, first two links are functional.
+
 #### To create a user: http://127.0.0.1:8000/emp/manage_employees/ 
 #### To login: username: email, password: last_nameif
 
