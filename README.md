@@ -7,7 +7,7 @@ http://127.0.0.1:8000/emp/manage_employees/ --> creates an employee, a User acco
 http://127.0.0.1:8000/emp/manager_page/# --> on the left sidebar, first two links are functional.
 
 #### To create a user: http://127.0.0.1:8000/emp/manage_employees/ 
-#### To login: username: email, password: last_nameif
+#### To login: username: email, password: last_name
 
 ##### To create a request(as a manager or as an employee) use the coloured column. You can try to add a start date after the enddate or a start hour after the end hour(if both dates are the same), neither case will add the request to the db.
 
