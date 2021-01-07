@@ -13,7 +13,7 @@ http://127.0.0.1:8000/emp/manager_page/# --> on the left sidebar, first two link
 
 #### To deny or approve a request(both from the manager and hr page): http://127.0.0.1:8000/emp/see_answer_requests/ 
 
-#### If you try to cancel a reuqest that starts less than 48 from now, the record wont be deleted. 
+#### If you try to cancel a request that starts less than 48 from now, the record wont be deleted. 
 
 
 ### No constranints of what role goes with what page are made. Unfortunately!
