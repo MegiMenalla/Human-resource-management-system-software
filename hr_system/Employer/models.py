@@ -38,8 +38,7 @@ class Role(models.Model):
 
     users = models.ManyToManyField(Users, through='UserRole')
 
-    def __str__(self):
-        return self.role
+
 
 
 class UserRole(models.Model):

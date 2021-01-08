@@ -6,7 +6,6 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .decorators import unauthenticated_user
 from .forms import CreateUserForm
 from .models import *
 
@@ -49,7 +48,7 @@ def manage_jobs(request):
     return render(request, 'manage_jobs.html', data)
 
 
-def hr(request, id):
+def hr(request):
     data = {
 
     }
@@ -64,17 +63,19 @@ def logini(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            if request.user.is_authenticated:
-                role = UserRole.objects.get(user=request.user.id)
-                role = role.role
 
-                if role == 1:
+            if user.is_active:
+                login(request, user)
+                role = UserRole.objects.get(user=request.user.id)
+
+                if role.role.id == 1:
                     return redirect('hr')
-                elif role == 2:
+                elif role.role.id == 2:
                     return redirect('manager_page')
-                else:
+                elif role.role.id == 3:
                     return redirect('emp_page')
+            else:
+                return HttpResponse('not active')
         else:
             return render(request, 'registration/login.html', data)
     else:
