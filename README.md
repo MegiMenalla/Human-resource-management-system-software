@@ -15,5 +15,6 @@ http://127.0.0.1:8000/emp/manager_page/# --> on the left sidebar, first two link
 
 #### If you try to cancel a request that starts less than 48 from now, the record wont be deleted. 
 
-
-### No constranints of what role goes with what page are made. Unfortunately!
+# To login as a human resources employee--> username: 'megi@gmail.com', password: 'Menalla' -->From here you can actually create othe users.
+# To login as a manager--> username: 'emma@gmail.com', password: 'Thiemig'
+# To login as an employee--> username: 'elvis@gmail.com', password: 'Presley'
