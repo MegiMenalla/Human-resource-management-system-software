@@ -25,6 +25,9 @@ urlpatterns = [
     path(r'user_role/',  UserRoleListCreateView.as_view()),
     path(r'user_role/<int:pk>/',  UserRoleViewRetrieveDeletePutView.as_view()),
 
+    path(r'user_holiday/',   UserHolidayListCreateView.as_view()),
+    path(r'user_holiday/<int:pk>/',  UserHolidayRetrieveDeletePut.as_view()),
+
 
 ]
 

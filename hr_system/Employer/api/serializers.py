@@ -27,14 +27,15 @@ class HolidaySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id','email', 'user']
+        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id', 'email', 'user']
 
 
 # serializer to make a request
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = AllowanceRequest
-        fields = ['id', 'user_id', 'start_date', 'end_date', 'start_hour', 'end_hour', 'approval_flag', 'checked',
+        fields = ['id', 'user_id', 'approver', 'start_date', 'end_date', 'start_hour', 'end_hour', 'approval_flag',
+                  'checked',
                   'description']
 
 
@@ -47,7 +48,13 @@ class RoleSerializer(serializers.ModelSerializer):
 class UserRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserRole
-        fields = ['id', 'user', 'role', 'end_date']
+        fields = ['id', 'user', 'role', 'start_date', 'end_date']
+
+
+class UserHolidaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserHoliday
+        fields = ['id', 'us', 'days_left']
 
 
 '''class ProfileSerializer(serializers.ModelSerializer):

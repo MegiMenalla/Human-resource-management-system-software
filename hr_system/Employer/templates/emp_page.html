@@ -4,19 +4,19 @@
 
 <div class="container-fluid pt-5 mt-5 pr-5">
     <div class="row">
-        <div class="col-3">
-            <button class="btn btn-outline-dark mb-3 ml-4" onclick="infoList({{request.user.id}})">Personal information</button>
+        <div class="col-2">
+            <a class="btn btn-outline-dark mb-3 ml-4" onclick="infoList({{request.user.id}})">Personal information</a>
 
             <ul style="list-style:none" id="listt">
 
             </ul>
         </div>
 
-        <div class="col-6">
+        <div class="col-7">
             <div class="row">
                 <div class="col ">
                     <h3>Checked: </h3>
-                    <table id="checkedList" class="table" style="width:90%;background-color:white;">
+                    <table id="checkedList" class="table" style="width:100%;background-color:white;">
 
                     </table>
                 </div>
@@ -60,6 +60,12 @@
     </div>
 
 </div>
+<script>
+    function getID(){
+     var id = {{ request.user.id }}
+     return id;
+    }
+</script>
 <script src="{% static 'js/request.js' %}"></script>
 
 {% endblock %}

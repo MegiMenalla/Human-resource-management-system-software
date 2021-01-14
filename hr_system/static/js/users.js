@@ -106,6 +106,7 @@ function getUser(user){
                 document.getElementById('salary').value = response.salary
                 document.getElementById('phone').value = response.phone_no
                 document.getElementById('hire_date').value = response.hire_date
+                document.getElementById('email').value = response.email
                 document.getElementById('wrapper').value = response.department_id
                 id = response.id
                 })
@@ -141,6 +142,7 @@ form.addEventListener('submit', function(e){
         var selector2 = document.getElementById('roles');
         var role = selector2[selector2.selectedIndex].value;
 
+
         // create a record on users table
         fetch(url, {
             method : 'POST',
@@ -174,6 +176,19 @@ form.addEventListener('submit', function(e){
             })
         })
 
+        alert('Click OK to finish!')
+        // create a record on user holidays table
+        var url1 = `http://127.0.0.1:8000/api/user_holiday/`
+        fetch(url1, {
+            method : 'POST',
+             headers:{'Content-type' : 'application/json',
+                     'X-CSRFToken': csrftoken
+            },
+            body : JSON.stringify({
+                'days_left':role
+            })
+        })
+
 
 
     }
@@ -189,6 +204,7 @@ function  putUser(id){
     var salary = document.getElementById('salary').value;
     var phone_no = document.getElementById('phone').value;
     var hire_date = document.getElementById('hire_date').value;
+    var email = document.getElementById('email').value;
     var selector = document.getElementById('wrapper');
     var dep = selector[selector.selectedIndex].value;
     fetch(url, {
@@ -202,6 +218,7 @@ function  putUser(id){
                 'salary':salary,
                 'phone_no': phone_no,
                 'hire_date':hire_date,
+                'email': email,
                 'department_id':dep
             })
         }).then(function(response){

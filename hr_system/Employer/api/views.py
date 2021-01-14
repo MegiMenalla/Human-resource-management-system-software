@@ -1,7 +1,9 @@
 import datetime
+from django.http import request, HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status, mixins
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import *
@@ -31,6 +33,40 @@ class HolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HolidaySerializer
 
 
+# list create for days left
+class UserHolidayListCreateView(generics.ListCreateAPIView):
+    queryset = UserHoliday.objects.all()
+    serializer_class = UserHolidaySerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = UserHolidaySerializer(data=request.data)
+        if serializer.is_valid():
+            x = serializer.data.get('days_left')  # actually get the role
+            r = Role.objects.get(id=x)
+            y = Users.objects.last()
+            us_days = UserHoliday(us=y, days_left=r.max_allowance_no)
+            us_days.save()
+            return Response(UserHolidaySerializer(us_days).data, status=status.HTTP_200_OK)
+
+
+# get, update delete days left
+class UserHolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserHoliday.objects.all()
+    serializer_class = UserHolidaySerializer
+
+    '''def create(self, request, *args, **kwargs):
+        # create a record on userholiday to determie the max number of days an employee(based on the role) has
+        userhol = UserHoliday.objects.all()
+        for x in userhol:
+            if x.us == u:
+                if x.days_left < r.max_allowance_no:
+                    x.days_left = r.max_allowance_no
+            else:
+                w = UserHoliday(us=u, days_left=r.max_allowance_no)
+                w.save()
+        return Response(UserHolidaySerializer(w).data, status=status.HTTP_200_OK)'''
+
+
 # list create for employees
 class UsersListCreateView(generics.ListCreateAPIView):
     queryset = Users.objects.all()
@@ -56,6 +92,7 @@ class UsersListCreateView(generics.ListCreateAPIView):
                           department_id=dep, email=email, user=user_acc)
             user1.id = user_acc.id
             user1.save()
+
             return Response(UserSerializer(user1).data, status=status.HTTP_200_OK)
 
 
@@ -75,6 +112,63 @@ class RequestListCreateView(generics.ListCreateAPIView):
 class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AllowanceRequest.objects.all()
     serializer_class = RequestSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = RequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            checked = serializer.data.get('checked')
+            approval_flag = serializer.data.get('approval_flag')
+            description = serializer.data.get('description')
+            req = self.get_object()
+
+            # check if offic holiday and subtract
+            if approval_flag:
+                who = req.user_id.id
+                userleft = UserHoliday.objects.get(us=who)
+                left = userleft.days_left
+                start_date = req.start_date
+                end_date = req.end_date
+                tmp = 0
+                # check for holidays
+                allholidays = OfficalHolidays.objects.all()
+                for i in allholidays:
+                    if i.active_flag:
+                        if start_date < i.day <= end_date:
+                            tmp += 1
+
+                dif_h = None
+                if start_date == end_date:
+                    start_hour = req.start_hour
+                    end_hour = req.end_hour
+                    dif_h = end_hour.hour - start_hour.hour
+                dif = end_date - start_date
+
+                # check if enough days left
+                if (left - dif.days) < 0:
+                    approval_flag = False
+                    description = 'Not enough days left!'
+                else:
+                    if dif_h is None:
+                        dif = dif.days
+                        left = left - dif
+                        left += tmp
+                    else:
+                        left = left * 24
+                        left = left - dif_h
+                        left = left / 24
+                        left += tmp
+                    userleft.days_left = left
+                    userleft.save()
+
+            appr = Users.objects.get(id=request.user.id)
+            req.approver = appr
+            req.checked = checked
+            req.approval_flag = approval_flag
+            req.description = description
+            req.save()
+            return Response(RequestSerializer(req).data, status=status.HTTP_200_OK)
+        return self.updatereturnall(request, *args, **kwargs)
 
 
 # list create roles
@@ -99,14 +193,17 @@ class UserRoleListCreateView(generics.ListCreateAPIView):
         if serializer.is_valid():
             current_time = datetime.date.today()
             r = serializer.data.get('role')
+            s = datetime.date.today()
             u = Users.objects.all().last()
             life = Role.objects.get(id=r)
             l = datetime.date(current_time.year + life.lifespan, 1, 1)
-
             r = Role.objects.get(id=r)
-            role = UserRole(user=u, role=r, end_date=l)
-            role.save()
-            return Response(UserRoleSerializer(role).data, status=status.HTTP_200_OK)
+            user_role = UserRole(user=u, role=r, start_date=s, end_date=l)
+            user_role.save()
+
+            return Response(UserRoleSerializer(user_role).data, status=status.HTTP_200_OK)
+
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # get, update delete one specific role

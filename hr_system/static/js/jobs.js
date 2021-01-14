@@ -68,7 +68,7 @@ function buildList(){
 
 
     // list the user-role
-    var url2 = 'http://127.0.0.1:8000/api/user_role/'
+    var url2 = `http://127.0.0.1:8000/api/user_role/`
 
     list.innerHTML +=`<tr>
                     <th>User</th>
@@ -91,20 +91,12 @@ function buildList(){
             roles.push(el.role);
             j++;
             }
-
-
             list.innerHTML +=`<tr><td class="${el.user}"></td><td class="${el.role}"></td><tr>`
          })
-
          data.forEach((el) => {
          getUser(el.user,i)
          getRole(el.role,j)
-
          })
-
-
-
-
     })
 
 }
@@ -128,8 +120,8 @@ function getUser(user,i){
                 name = response.first_name.concat('  ')
                 name = name.concat(response.last_name)
                 for (j = 0; j < i; j++)
-                document.getElementsByClassName(user)[j].innerHTML = name
-
+                if (document.getElementsByClassName(user)[j]!=null)
+                    document.getElementsByClassName(user)[j].innerHTML = name
 
                 })
     }
@@ -151,7 +143,40 @@ function getRole(role,i){
                 role1 = response.role
 
                 for (j = 0; j < i; j++)
-                    document.getElementsByClassName(role)[j].innerHTML = role1;
+                    if (document.getElementsByClassName(role)[j]!=null)
+                        document.getElementsByClassName(role)[j].innerHTML = role1;
 
                 })
     }
+
+
+
+// post
+function postRole(){
+    var form = document.getElementById('form-wrapper')
+    var url = `http://127.0.0.1:8000/api/user_role/`
+    form.innerHTML='';
+    var start = document.getElementById('start').value;
+    var selector = document.getElementById('user');
+    var user = selector[selector.selectedIndex].value;
+    var selector1 = document.getElementById('role');
+    var role = selector1[selector1.selectedIndex].value;
+
+    fetch( url, {
+        method: 'POST',
+        headers:{'Content-type' : 'application/json',
+        'X-CSRFToken': csrftoken
+        },
+        body : JSON.stringify({
+                                'user': role,
+                                 'role': role,
+                                 'start_date':start })
+        }).then(function(response){
+            buildList()
+
+            })
+
+
+
+}
+

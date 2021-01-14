@@ -1,4 +1,3 @@
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -67,7 +66,6 @@ form.addEventListener('submit', function(e){
         var x = document.getElementById("active_flag").checked;
         console.log(x)
         if (x)
-
             active_flag=true;
         else
             active_flag=false;

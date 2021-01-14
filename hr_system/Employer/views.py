@@ -1,12 +1,7 @@
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-from .forms import CreateUserForm
 from .models import *
 
 
@@ -63,11 +58,11 @@ def logini(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-
             if user.is_active:
                 login(request, user)
-                role = UserRole.objects.get(user=request.user.id)
+                request.session['id'] = user.id
 
+                role = UserRole.objects.get(user=request.user.id)
                 if role.role.id == 1:
                     return redirect('hr')
                 elif role.role.id == 2:
@@ -83,6 +78,7 @@ def logini(request):
 
 
 def logoutUser(request):
+    del request.session['id']
     logout(request)
     return redirect('logini')
 

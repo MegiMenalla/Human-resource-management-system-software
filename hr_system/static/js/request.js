@@ -15,7 +15,7 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-
+var name='';
 function reset(){
  document.getElementById('form-wrapper').reset()
  document.getElementById('checkedList').innerHTML=''
@@ -24,10 +24,13 @@ function reset(){
 }
 
 
-
+var id = getID()
+console.log(id);
 
 // post
 function postRequest(userID){
+
+
     infoList(userID);
     var form = document.getElementById('form-wrapper');
 
@@ -48,8 +51,11 @@ function postRequest(userID){
     var endhour = moment(endh,"hh:mm")
 
     //alert(starthour.isBefore(endhour))
-
-    if(endmoment.isBefore(startmoment)){
+    if (startmoment.isBefore(moment())){
+        alert('Your input is invalid. Please make sure your start date is after today!')
+        return;
+    }
+    else if(endmoment.isBefore(startmoment)){
         alert('Your input is invalid. Please make sure your start date is before your end date!')
         return;
     }else if(startmoment.isSame(endmoment)){
@@ -66,13 +72,15 @@ function postRequest(userID){
                 },
                 body : JSON.stringify({
                     'user_id': userID,
+                    'approver': null,
                     'start_date':startd,
                     'end_date':endd,
                     'start_hour':starth,
                     'end_hour':endh,
                     'approval_flag':approval_flag,
                     'checked': checked,
-                    'description':desc
+                    'description':desc,
+
                 })
             }).then(function(response){
                 reset();
@@ -80,7 +88,7 @@ function postRequest(userID){
             })
         }
     }else{
-        //subtract from total days
+
         fetch(url, {
             method : 'POST',
              headers:{'Content-type' : 'application/json',
@@ -88,13 +96,15 @@ function postRequest(userID){
             },
             body : JSON.stringify({
                 'user_id': userID,
+                'approver': null,
                 'start_date':startd,
                 'end_date':endd,
                 'start_hour':starth,
                 'end_hour':endh,
                 'approval_flag':approval_flag,
                 'checked': checked,
-                'description':desc
+                'description':desc,
+
             })
         }).then(function(response){
             reset();
@@ -139,9 +149,14 @@ function buildList(){
         uncheckedList.innerHTML +=unchecked
 
 
+        var i=0;
+        tmp = [];
 
         data.forEach((el) => {
-        if (el.checked){
+        // check if its this userrss request
+        if (el.user_id==id){
+            if (el.checked){
+
               if(el.approval_flag)
                 var sts = `<h6 class="text-success">Approved</h6>
                 <td><button class="btn btn-sm btn-outline-danger" onClick="deleteRequest(${el.id})" >X</button></td>`
@@ -172,6 +187,10 @@ function buildList(){
 
             uncheckedList.innerHTML +=unchecked
         }
+        }
+
+
+
        })
 
     })
@@ -253,5 +272,8 @@ function infoList(userID){
 
     })
 }
+
+
+
 
 

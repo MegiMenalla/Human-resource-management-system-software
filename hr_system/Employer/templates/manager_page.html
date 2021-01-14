@@ -103,6 +103,12 @@
     </div>
 
 </div>
+<script>
+    function getID(){
+     var id = {{ request.user.id }}
+     return id;
+    }
+</script>
 <script src="{% static 'js/request.js' %}"></script>
 
 {% endblock %}

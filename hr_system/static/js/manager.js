@@ -15,32 +15,22 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-
-
-
-// get one user name
 var name=null;
-function getUser(user,i){
-    var url = `http://127.0.0.1:8000/api/users/${user}/`
-        fetch( url, {
-            method: 'GET',
-            headers:{'Content-type' : 'application/json',
-            'X-CSRFToken': csrftoken
-            }
-            }).then((resp)=> resp.json())
-            .then(function(response){
-            //console.log(response.department_id)
-                name = response.first_name.concat('  ')
-                name = name.concat(response.last_name)
-                for (j = 0; j < i; j++)
-                    document.getElementsByClassName(user)[j].innerHTML = name
-                })
-    }
+var id = getID();
+
+console.log('id');
+console.log(id.id);
+
+
+
+
+
+buildListRequests()
+
 
 
 // build the tables for checked and unchecked requests
 
-buildListRequests()
 
 function buildListRequests(){
     var uncheckedList = document.getElementById('for_approval')
@@ -75,6 +65,8 @@ function buildListRequests(){
 
         var i=0;
         response.forEach((el) => {
+
+
          i++;
         // get the username for display purpose
         getUser(el.user_id,i)
@@ -138,6 +130,7 @@ function  approve(id){
         }).then(function(response){
             reset()
             buildListRequests()
+
         })
 
 
@@ -156,6 +149,7 @@ function  deny(id){
             },
             body : JSON.stringify({
                 'checked':true,
+                 'approval_flag':false,
                 'description':desc
             })
         }).then(function(response){
@@ -168,3 +162,24 @@ function reset(){
  document.getElementById('for_approval').innerHTML=''
  document.getElementById('checked_requests').innerHTML=''
 }
+
+// get one user name
+
+function getUser(user,i){
+    var url = `http://127.0.0.1:8000/api/users/${user}/`
+        fetch( url, {
+            method: 'GET',
+            headers:{'Content-type' : 'application/json',
+            'X-CSRFToken': csrftoken
+            }
+            }).then((resp)=> resp.json())
+            .then(function(response){
+            //console.log(response.department_id)
+                name = response.first_name.concat('  ')
+                name = name.concat(response.last_name)
+                for (j = 0; j < i; j++)
+                    if (document.getElementsByClassName(user)[j]!=null)
+                        document.getElementsByClassName(user)[j].innerHTML = name;
+
+                })
+    }
