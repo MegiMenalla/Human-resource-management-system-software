@@ -11,34 +11,40 @@ from .serializers import *
 
 # list create for Departments
 class DepartmentListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
 
 
 # get, update delete one specific department
 class DepartmentRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
 
 
 # list create for Holiday dates
 class HolidayListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = OfficalHolidays.objects.all()
     serializer_class = HolidaySerializer
 
 
 # get, update delete one specific holiday
 class HolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = OfficalHolidays.objects.all()
     serializer_class = HolidaySerializer
 
 
 # list create for days left
 class UserHolidayListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = UserHoliday.objects.all()
     serializer_class = UserHolidaySerializer
 
     def create(self, request, *args, **kwargs):
+        permission_classes = [IsAuthenticated]
         serializer = UserHolidaySerializer(data=request.data)
         if serializer.is_valid():
             x = serializer.data.get('days_left')  # actually get the role
@@ -51,24 +57,14 @@ class UserHolidayListCreateView(generics.ListCreateAPIView):
 
 # get, update delete days left
 class UserHolidayRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = UserHoliday.objects.all()
     serializer_class = UserHolidaySerializer
-
-    '''def create(self, request, *args, **kwargs):
-        # create a record on userholiday to determie the max number of days an employee(based on the role) has
-        userhol = UserHoliday.objects.all()
-        for x in userhol:
-            if x.us == u:
-                if x.days_left < r.max_allowance_no:
-                    x.days_left = r.max_allowance_no
-            else:
-                w = UserHoliday(us=u, days_left=r.max_allowance_no)
-                w.save()
-        return Response(UserHolidaySerializer(w).data, status=status.HTTP_200_OK)'''
 
 
 # list create for employees
 class UsersListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Users.objects.all()
     serializer_class = UserSerializer
 
@@ -98,18 +94,61 @@ class UsersListCreateView(generics.ListCreateAPIView):
 
 # get, update delete one specific employee
 class UsersRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Users.objects.all()
     serializer_class = UserSerializer
 
 
+# list requests that are not checked yet
+class RequestList(generics.ListAPIView):
+    queryset = AllowanceRequest.objects.all()
+    serializer_class = RequestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+
+        queryset = AllowanceRequest.objects.all()
+        serializer = RequestSerializer(queryset, many=True)
+        me = request.user.id
+        dep = Users.objects.get(id=me)
+        dep = dep.department_id.id
+
+        # check if users role
+        role = UserRole.objects.get(user=me)
+        requesters = []
+        # if user is HR --> he will see only managers requests
+        if role.role.id == 1:
+            managers = UserRole.objects.filter(role=2)
+            for i in managers:
+                requesters.append(i.user.id)
+                print('manager')
+
+        # if user is manager he'll see only its emps requests
+        elif role.role.id == 2:
+            employees = UserRole.objects.filter(role=3)
+            for i in employees:
+                emp = Users.objects.get(id=i.user.id)
+                if emp.department_id.id == dep:
+                    requesters.append(emp.id)
+                    print('punonjes')
+
+        print(requesters)
+        allreq = AllowanceRequest.objects.filter(user_id__in=requesters)
+
+        serializer = RequestSerializer(allreq, many=True)
+        return Response(serializer.data)
+
+
 # list create requests
 class RequestListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = AllowanceRequest.objects.all()
     serializer_class = RequestSerializer
 
 
 # get, update delete one specific request
 class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = AllowanceRequest.objects.all()
     serializer_class = RequestSerializer
 
@@ -173,18 +212,21 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
 
 # list create roles
 class RoleListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
 
 # get, update delete one specific role
 class RoleRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
 
 # list create user-role-relationship
 class UserRoleListCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
 
@@ -210,6 +252,7 @@ class UserRoleListCreateView(generics.ListCreateAPIView):
 class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
+    permission_classes = [IsAuthenticated]
 
 
 ''''# list create Profiles

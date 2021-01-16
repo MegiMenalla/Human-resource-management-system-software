@@ -28,6 +28,8 @@ urlpatterns = [
     path(r'user_holiday/',   UserHolidayListCreateView.as_view()),
     path(r'user_holiday/<int:pk>/',  UserHolidayRetrieveDeletePut.as_view()),
 
+    path(r'requests-to-be-checked/',  RequestList.as_view()),
+
 
 ]
 

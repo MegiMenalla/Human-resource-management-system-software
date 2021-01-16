@@ -18,16 +18,10 @@ const csrftoken = getCookie('csrftoken');
 var name=null;
 var id = getID();
 
-console.log('id');
-console.log(id.id);
-
-
 
 
 
 buildListRequests()
-
-
 
 // build the tables for checked and unchecked requests
 
@@ -35,7 +29,7 @@ buildListRequests()
 function buildListRequests(){
     var uncheckedList = document.getElementById('for_approval')
     var checkedList = document.getElementById('checked_requests')
-    var url = `http://127.0.0.1:8000/api/requests/`
+    var url = `http://127.0.0.1:8000/api/requests-to-be-checked/`
     fetch(url)
     .then((resp)=> resp.json())
     .then(function(response){
@@ -66,46 +60,45 @@ function buildListRequests(){
         var i=0;
         response.forEach((el) => {
 
+        console.log(el.user_id)
+            i++;
+            // get the username for display purpose
+            getUser(el.user_id,i)
 
-         i++;
-        // get the username for display purpose
-        getUser(el.user_id,i)
+            if (el.checked){
+                  if(el.approval_flag)
+                    var sts = `<h6 class="text-success">Approved</h6>`
+                    else
+                    var sts = `<h6 class="text-danger">Denied</h6>`
 
-        if (el.checked){
-              if(el.approval_flag)
-                var sts = `<h6 class="text-success">Approved</h6>`
-                else
-                var sts = `<h6 class="text-danger">Denied</h6>`
-
-                var checked = `<tr>
+                    var checked = `<tr>
+                                        <td class="${el.user_id}"></td>
+                                        <td>${el.start_date}</td>
+                                        <td>${el.start_hour}</td>
+                                        <td>${el.end_date}</td>
+                                        <td>${el.end_hour}</td>
+                                        <td>${sts}</td>
+                                        <td style="width: 25%;">${el.description}</td>
+                                    </tr>`
+                    checkedList.innerHTML +=checked
+            }
+            else{
+                var unchecked = `<tr>
                                     <td class="${el.user_id}"></td>
                                     <td>${el.start_date}</td>
                                     <td>${el.start_hour}</td>
                                     <td>${el.end_date}</td>
                                     <td>${el.end_hour}</td>
-                                    <td>${sts}</td>
-                                    <td style="width: 25%;">${el.description}</td>
+                                    <td><a class="btn btn-success" onClick='approve(${el.id})'>Approve</a></td>
+                                    <td><a class="btn btn-danger" onClick='deny(${el.id})'>Deny</a></td>
+                                    <td><form>
+                                        <textarea id="desc" rows="2" cols="50"></textarea>
+                                    </form></td>
                                 </tr>`
-                checkedList.innerHTML +=checked
-        }
-        else{
-            var unchecked = `<tr>
-                                <td class="${el.user_id}"></td>
-                                <td>${el.start_date}</td>
-                                <td>${el.start_hour}</td>
-                                <td>${el.end_date}</td>
-                                <td>${el.end_hour}</td>
-                                <td><a class="btn btn-success" onClick='approve(${el.id})'>Approve</a></td>
-                                <td><a class="btn btn-danger" onClick='deny(${el.id})'>Deny</a></td>
-                                <td><form>
-                                    <textarea id="desc" rows="2" cols="50"></textarea>
-                                </form></td>
-                            </tr>`
-            uncheckedList.innerHTML +=unchecked
-        }
+                uncheckedList.innerHTML +=unchecked
+            }
 
        })
-
     })
 }
 
@@ -130,11 +123,7 @@ function  approve(id){
         }).then(function(response){
             reset()
             buildListRequests()
-
         })
-
-
-
 }
 
 // update // deny a request and give a reason why

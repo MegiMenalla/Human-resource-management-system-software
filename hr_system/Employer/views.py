@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 
@@ -7,42 +8,49 @@ from .models import *
 
 # Create your views here.
 
-
+@login_required(login_url='logini')
 def emp_page(request):
     data = {}
     return render(request, 'emp_page.html', data)
 
 
+@login_required(login_url='logini')
 def manager_page(request):
     data = {}
     return render(request, 'manager_page.html', data)
 
 
+@login_required(login_url='logini')
 def see_answer_requests(request):
     data = {}
     return render(request, 'components/see_answer_requests.html', data)
 
 
+@login_required(login_url='logini')
 def manage_holidays(request):
     data = {}
     return render(request, 'manage_holidays.html', data)
 
 
+@login_required(login_url='logini')
 def manage_employees(request):
     data = {}
     return render(request, 'manage_employees.html', data)
 
 
+@login_required(login_url='logini')
 def manage_departments(request):
     data = {}
     return render(request, 'manage_departments.html', data)
 
 
+@login_required(login_url='logini')
 def manage_jobs(request):
     data = {}
     return render(request, 'manage_jobs.html', data)
 
 
+@login_required(login_url='logini')
 def hr(request):
     data = {
 
@@ -77,6 +85,7 @@ def logini(request):
         return render(request, 'registration/login.html', data)
 
 
+@login_required(login_url='logini')
 def logoutUser(request):
     del request.session['id']
     logout(request)
