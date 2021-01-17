@@ -1,9 +1,5 @@
 import datetime
-from django.http import request, HttpResponse
-from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status, mixins
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import *
@@ -121,18 +117,15 @@ class RequestList(generics.ListAPIView):
             managers = UserRole.objects.filter(role=2)
             for i in managers:
                 requesters.append(i.user.id)
-                print('manager')
 
         # if user is manager he'll see only its emps requests
         elif role.role.id == 2:
             employees = UserRole.objects.filter(role=3)
             for i in employees:
                 emp = Users.objects.get(id=i.user.id)
-                if emp.department_id.id == dep:
+                if emp.department_id == dep:
                     requesters.append(emp.id)
-                    print('punonjes')
 
-        print(requesters)
         allreq = AllowanceRequest.objects.filter(user_id__in=requesters)
 
         serializer = RequestSerializer(allreq, many=True)
@@ -160,6 +153,18 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
             approval_flag = serializer.data.get('approval_flag')
             description = serializer.data.get('description')
             req = self.get_object()
+
+            # check for overlapping requests
+            this_users_req = AllowanceRequest.objects.filter(user_id=req.user_id.id, approval_flag=True)
+            for i in this_users_req:
+                if i.start_date != i.end_date:
+                    if i.start_date <= req.start_date <= i.end_date or i.start_date <= req.end_date <= i.end_date:
+                        approval_flag = False
+                        description = 'Overlapping request!'
+                else:
+                    if i.start_hour <= req.start_hour <= i.end_hour or i.start_hour <= req.end_hour <= i.end_hour:
+                        approval_flag = False
+                        description = 'Overlapping requests!'
 
             # check if offic holiday and subtract
             if approval_flag:
@@ -207,7 +212,6 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
             req.description = description
             req.save()
             return Response(RequestSerializer(req).data, status=status.HTTP_200_OK)
-        return self.updatereturnall(request, *args, **kwargs)
 
 
 # list create roles

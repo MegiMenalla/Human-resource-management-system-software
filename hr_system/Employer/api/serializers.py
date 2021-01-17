@@ -8,7 +8,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Departments
-        fields = ('id', 'department_name', 'department_manager', 'parent_dep', 'parent_dep_name')
+        fields = ('id', 'department_name', 'manager', 'parent_dep', 'parent_dep_name')
 
     @staticmethod
     def get_parent_dep_name(obj):
@@ -21,7 +21,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 class HolidaySerializer(serializers.ModelSerializer):
     class Meta:
         model = OfficalHolidays
-        fields = ['id', 'holiday_name', 'active_flag', 'day', 'last_active']
+        fields = ['id', 'holiday_name', 'active_flag', 'day']
 
 
 class UserSerializer(serializers.ModelSerializer):

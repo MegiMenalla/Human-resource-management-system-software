@@ -25,6 +25,8 @@ buildList()
 function buildList(){
     var wrapper = document.getElementById('wrapper')
     wrapper.innerHTML = ''
+    var depmanager = document.getElementById('depmanager')
+    depmanager.innerHTML = ''
     var listt = document.getElementById('listt')
     listt.innerHTML = ''
     var url = 'http://127.0.0.1:8000/api/departments/'
@@ -33,19 +35,33 @@ function buildList(){
     .then(function(data){
         console.log('Data:', data)
         wrapper.innerHTML +=`<option  value="none" selected disabled>No parent department</option>`
+
+
         data.forEach((el) => {
             var item = `<option  value="${el.id}" >${el.department_name}</option >`
             wrapper.innerHTML +=item
-            var item1 = `<li  id="${el.id}" class="mb-3 " >
+            var item1 = `<li class="mb-3 " >
                           <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getDepartment(${el.id})">Edit</button>
                           <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
-                          <strong>  ${el.department_name} </strong>    [Manager: ${el.department_manager }]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
+                          <strong>  ${el.department_name} </strong>[Manager: ${el.get_manager_name}]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
             listt.innerHTML +=item1
 
          })
 
     })
+     //poplate the manager select
+    var url1 = 'http://127.0.0.1:8000/api/users/'
+    fetch(url1)
+        .then((resp)=> resp.json())
+        .then(function(response){
+            console.log('Data:', response)
+         response.forEach((el) => {
+            var item1 = `<option  value="${el.id}" >${el.first_name} ${el.last_name}</option >`
+            depmanager.innerHTML +=item1
+          })
+        })
 }
+
 
 
 // post
@@ -61,11 +77,12 @@ form.addEventListener('submit', function(e){
     {
         var url = 'http://127.0.0.1:8000/api/departments/'
         var depname = document.getElementById('depname').value;
-        var depmanager = document.getElementById('depmanager').value;
+
+        var selector = document.getElementById('depmanager');
+        var depmanager = selector[selector.selectedIndex].value;
 
         var selector = document.getElementById('wrapper');
         var depparent = selector[selector.selectedIndex].value;
-
 
 
         fetch( url, {
@@ -74,8 +91,8 @@ form.addEventListener('submit', function(e){
                      'X-CSRFToken': csrftoken
             },
             body : JSON.stringify({'department_name': depname,
-                                    'department_manager': depmanager,
-                                     'parent_dep': depparent})
+                                    'manager': depmanager,
+                                    'parent_dep': depparent})
             }).then(function(response){
                 buildList()
                 reset()
@@ -91,7 +108,9 @@ function putDepartment(id){
 var url = `http://127.0.0.1:8000/api/departments/${id}/`
 
     var depname = document.getElementById('depname').value;
-    var depmanager = document.getElementById('depmanager').value;
+
+    var selector1 = document.getElementById('depmanager');
+    var depmanager = selector1[selector1.selectedIndex].value;
 
     var selector = document.getElementById('wrapper');
     var depparent = selector[selector.selectedIndex].value;
@@ -101,7 +120,7 @@ var url = `http://127.0.0.1:8000/api/departments/${id}/`
         'X-CSRFToken': csrftoken
         },
         body : JSON.stringify({'department_name': depname,
-                                'department_manager': depmanager,
+                                'manager': depmanager,
                                  'parent_dep': depparent})
         }).then(function(response){
             buildList()
@@ -137,8 +156,8 @@ function deleteItem(item){
 var id = null;
 function getDepartment(item){
     var url = `http://127.0.0.1:8000/api/departments/${item}/`
-        var depname = document.getElementById('depname').value;
-        var depmanager = document.getElementById('depmanager').value;
+        //var depname = document.getElementById('depname').value;
+        //var depmanager = document.getElementById('depmanager').value;
         fetch( url, {
             method: 'GET',
             headers:{'Content-type' : 'application/json',
@@ -150,12 +169,39 @@ function getDepartment(item){
             console.log(response.data)
                 reset()
                 document.getElementById('depname').value = response.department_name
-                document.getElementById('depmanager').value = response.department_manager
+                document.getElementById('depmanager').value = response.manager
                 document.getElementById('wrapper').value= response.parent_dep
 
                 id = response.id
                 })
     }
+
+
+
+// get manager name
+
+// get one user
+
+function getManager(user, dep){
+    var url = `http://127.0.0.1:8000/api/users/${user}/`
+
+        fetch( url, {
+            method: 'GET',
+            headers:{'Content-type' : 'application/json',
+            'X-CSRFToken': csrftoken
+            }
+            }).then((resp)=> resp.json())
+            .then(function(response){
+                if (document.getElementById(dep)!=null){
+                var n = response.first_name.concat(' ').concat(response.last_name);
+                document.getElementById(dep).innerHTML = n;
+                console.log('afteraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                }
+            })
+    }
+
+
+
 
 
 

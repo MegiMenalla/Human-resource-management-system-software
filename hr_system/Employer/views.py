@@ -92,24 +92,25 @@ def logoutUser(request):
     return redirect('logini')
 
 
-'''def register(request):
-    form = CreateUserForm()
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
 
+
+def change_password(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            username = form.cleaned_data.get('username')
-            Profile.objects.create(
-                user=user,
-            )
-            messages.success(request, 'Profili u kijua: ')
-            messages.success(request, username)
-            return redirect('logini')
-
-    data = {
-        'form': form,
-
-    }
-    return render(request, 'registration/register.html', data)
-'''
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    update_session_auth_hash(request, form.user)  # <-- keep the user loged after password change
+    return render(request, 'registration/change_password.html', {
+        'form': form
+    })

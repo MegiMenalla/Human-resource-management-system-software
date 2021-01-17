@@ -126,7 +126,8 @@ function  approve(id){
         })
 }
 
-// update // deny a request and give a reason why
+// update
+// deny a request and give a reason why
 function  deny(id){
   var desc = document.getElementById('desc').value;
     var url = `http://127.0.0.1:8000/api/requests/${id}/`

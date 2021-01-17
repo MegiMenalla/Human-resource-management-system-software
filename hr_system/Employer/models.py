@@ -6,9 +6,8 @@ from django.contrib.auth.models import User
 
 class Departments(models.Model):
     department_name = models.CharField(max_length=100, null=True)
-    department_manager = models.CharField(max_length=100, null=True)
-    parent_dep = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
-    # manager = models.ForeignKey('Users')
+    parent_dep = models.ForeignKey('self', blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    manager = models.ForeignKey('Users', null=True, blank=True, default=None, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.department_name
@@ -20,7 +19,7 @@ class Users(models.Model):
     salary = models.FloatField(null=True)
     phone_no = models.CharField(max_length=200, null=True)
     hire_date = models.DateField(auto_now_add=True)
-    department_id = models.ForeignKey(Departments, null=True, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Departments, null=True, on_delete=models.SET_NULL)
     email = models.EmailField(max_length=100, null=True, unique=True)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
@@ -52,12 +51,11 @@ class OfficalHolidays(models.Model):
     holiday_name = models.CharField(max_length=200, null=True)
     active_flag = models.BooleanField(default=True, null=True)
     day = models.DateField(null=True)
-    last_active = models.DateField(null=True)
 
 
 class AllowanceRequest(models.Model):
-    user_id = models.ForeignKey(Users, null=True, on_delete=models.CASCADE, related_name='applicant')
-    approver = models.ForeignKey(Users, null=True, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Users, null=True, on_delete=models.SET_NULL, related_name='applicant')
+    approver = models.ForeignKey(Users, null=True, on_delete=models.SET_NULL)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     start_hour = models.TimeField(default='00:00:00')

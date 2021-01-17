@@ -15,8 +15,6 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-var activeItem = null;
-
 
 
 
@@ -30,13 +28,19 @@ function buildList(){
     fetch(url)
     .then((resp)=> resp.json())
     .then(function(data){
-        console.log('Data:', data)
 
         data.forEach((el) => {
-            var item1 = `<li  id="${el.id}" class="mb-3 " >
+        var showactive;
+
+        if (el.active_flag==true)
+             showactive = `<a class="text-success">Active</a>`
+        else
+             showactive = `<a class="text-danger">Inactive</a>`
+
+            var item1 = `<li  id="${el.id}" class="mb-3 ">
                           <button type="submit" class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="getHoliday(${el.id})">Edit</button>
                           <button type="submit" class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteHoliday(${el.id})">X</button>
-                          <strong>  ${el.holiday_name} </strong> on ${el.day }</li>`
+                          <strong> ${el.holiday_name} </strong> on ${el.day} -- ${showactive}</li>`
             listt.innerHTML +=item1
 
          })
@@ -51,20 +55,16 @@ form.addEventListener('submit', function(e){
     e.preventDefault()
 
     if(id!=null){
-
         putHoliday(id);
         id = null;
     }
     else
     {
         var url = 'http://127.0.0.1:8000/api/holidays/'
-
         var name = document.getElementById('holname').value;
         var day = document.getElementById('day').value;
-        var lastactive = document.getElementById('lastactive').value;
         var active_flag = document.getElementById('active_flag').value;
         var x = document.getElementById("active_flag").checked;
-        console.log(x)
         if (x)
             active_flag=true;
         else
@@ -78,8 +78,7 @@ form.addEventListener('submit', function(e){
             },
             body : JSON.stringify({'holiday_name': name,
                                     'active_flag': active_flag,
-                                     'day': day,
-                                     'last_active':lastactive})
+                                     'day': day})
             }).then(function(response){
                 buildList()
                 reset()
@@ -96,12 +95,10 @@ var url = `http://127.0.0.1:8000/api/holidays/${id}/`
 
     var name = document.getElementById('holname').value;
     var day = document.getElementById('day').value;
-    var lastactive = document.getElementById('lastactive').value;
     var active_flag = document.getElementById('active_flag').value;
     var x = document.getElementById("active_flag").checked;
         console.log(x)
         if (x)
-
             active_flag=true;
         else
             active_flag=false;
@@ -116,8 +113,7 @@ var url = `http://127.0.0.1:8000/api/holidays/${id}/`
         },
         body : JSON.stringify({'holiday_name': name,
                                 'active_flag': active_flag,
-                                 'day': day,
-                                 'last_active':lastactive})
+                                 'day': day})
         }).then(function(response){
             buildList()
             reset()
@@ -152,12 +148,6 @@ function deleteHoliday(item){
 var id = null;
 function getHoliday(item){
     var url = `http://127.0.0.1:8000/api/holidays/${item}/`
-    var name = document.getElementById('holname').value;
-    var day = document.getElementById('day').value;
-    var lastactive = document.getElementById('lastactive').value;
-    var active_flag = document.getElementById('active_flag').value;
-
-
 
         fetch( url, {
             method: 'GET',
@@ -171,7 +161,6 @@ function getHoliday(item){
                 reset()
                 document.getElementById('holname').value= response.holiday_name
                 document.getElementById('day').value = response.day
-                document.getElementById('lastactive').value = response.last_active
                  if (response.active_flag==true)
                    document.getElementById("active_flag").checked=true;
                 else

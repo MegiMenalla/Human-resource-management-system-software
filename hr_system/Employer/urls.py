@@ -8,6 +8,7 @@ urlpatterns = [
     path(r'hr/', views.hr, name="hr"),
     path(r'logini/', views.logini, name="logini"),
     path(r'logoutUser/', views.logoutUser, name="logoutUser"),
+    path(r'change_password/', views.change_password, name="change_password"),
     path(r'manage_departments/', views.manage_departments, name="manage_departments"),
     path(r'manage_employees/', views.manage_employees, name="manage_employees"),
     path(r'manage_holidays/', views.manage_holidays, name="manage_holidays"),
