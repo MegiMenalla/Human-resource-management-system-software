@@ -1,20 +1,25 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import  HttpResponse
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
-
+from .decorators import is_human_resources, is_manager, is_employee
 from .models import *
 
 
 # Create your views here.
 
 @login_required(login_url='logini')
+@is_employee
 def emp_page(request):
     data = {}
     return render(request, 'emp_page.html', data)
 
 
 @login_required(login_url='logini')
+@is_manager
 def manager_page(request):
     data = {}
     return render(request, 'manager_page.html', data)
@@ -51,6 +56,7 @@ def manage_jobs(request):
 
 
 @login_required(login_url='logini')
+@is_human_resources
 def hr(request):
     data = {
 
@@ -92,12 +98,9 @@ def logoutUser(request):
     return redirect('logini')
 
 
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import render, redirect
 
 
+@login_required(login_url='logini')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
