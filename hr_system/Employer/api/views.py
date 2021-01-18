@@ -108,23 +108,24 @@ class RequestList(generics.ListAPIView):
         me = request.user.id
         dep = Users.objects.get(id=me)
         dep = dep.department_id.id
-
-        # check if users role
-        role = UserRole.objects.get(user=me)
+        # check the users role
+        role = UserRole.objects.filter(user=me)
+        ids = [i.role.id for i in role]
+        id = min(ids)
         requesters = []
         # if user is HR --> he will see only managers requests
-        if role.role.id == 1:
+        if id == 1:
             managers = UserRole.objects.filter(role=2)
             for i in managers:
                 requesters.append(i.user.id)
+                requesters = [i for i in requesters if i != me]
 
         # if user is manager he'll see only its emps requests
-        elif role.role.id == 2:
+        elif id == 2:
             employees = UserRole.objects.filter(role=3)
-            for i in employees:
-                emp = Users.objects.get(id=i.user.id)
-                if emp.department_id == dep:
-                    requesters.append(emp.id)
+            empr = [i.user.id for i in employees]
+            emp = Users.objects.filter(id__in=empr, department_id=dep)
+            requesters = [e.id for e in emp if e.id != me]
 
         allreq = AllowanceRequest.objects.filter(user_id__in=requesters)
         # print(allreq)
@@ -212,9 +213,9 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
             req.description = description
             req.save()
             return Response(RequestSerializer(req).data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
-        print('hi')
         serializer = RequestSerializer(data=request.data)
         if serializer.is_valid():
             req = self.get_object()

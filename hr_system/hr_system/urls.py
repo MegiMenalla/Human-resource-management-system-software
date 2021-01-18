@@ -14,7 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path, include
+
+
+def okay(request):
+    return HttpResponse('pretend-binary-data-here', content_type='image/jpeg')
+
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
@@ -22,4 +28,5 @@ urlpatterns = [
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'emp/', include('Employer.urls')),
     path(r'api/', include('Employer.api.urls')),
+    path('favicon.ico', okay),
 ]

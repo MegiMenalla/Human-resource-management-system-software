@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import  HttpResponse
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -76,13 +76,15 @@ def logini(request):
                 login(request, user)
                 request.session['id'] = user.id
                 print(request.user.id)
-                role = UserRole.objects.get(user=request.user.id)
-                print(role)
-                if role.role.id == 1:
+                role = UserRole.objects.filter(user=request.user.id)
+                ids = [i.role.id for i in role]
+                id = min(ids)
+                print(id)
+                if id == 1:
                     return redirect('hr')
-                elif role.role.id == 2:
+                elif id == 2:
                     return redirect('manager_page')
-                elif role.role.id == 3:
+                elif id == 3:
                     return redirect('emp_page')
             else:
                 return HttpResponse('not active')
@@ -99,15 +101,13 @@ def logoutUser(request):
     return redirect('logini')
 
 
-
-
 @login_required(login_url='logini')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
             return redirect('change_password')
         else:
