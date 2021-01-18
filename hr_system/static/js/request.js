@@ -29,8 +29,6 @@ console.log(id);
 
 // post
 function postRequest(userID){
-
-
     infoList(userID);
     var form = document.getElementById('form-wrapper');
 
@@ -188,8 +186,6 @@ function buildList(){
             uncheckedList.innerHTML +=unchecked
         }
         }
-
-
 
        })
 

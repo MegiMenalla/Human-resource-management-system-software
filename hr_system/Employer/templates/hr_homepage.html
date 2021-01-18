@@ -1,100 +1,96 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<div class="page-wrapper toggled">
-    <nav id="sidebar" class="sidebar-wrapper" style="top:80px;">
-        <div class="sidebar-content">
-            <div class="sidebar-header">
-                <div class="user-info">
-                    <a class="btn btn-outline-info  mb-3" href="{% url 'change_password' %}" target="_blank">Change
-                        Password</a>
-                    <span class="user-name"><strong>Human Resources</strong></span>
 
+
+<div class="row">
+    <div class="col-3">
+        <div class="page-wrapper toggled">
+            <nav id="sidebar" class="sidebar-wrapper" style="top:80px;">
+                <div class="sidebar-content">
+                    <div class="sidebar-header">
+                        <div class="user-info">
+                            <a class="btn btn-outline-info  mb-1" href="{% url 'change_password' %}" target="_blank">Change
+                                Password</a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-menu">
+                        <ul>
+                            <li class="header-menu">
+                                <span>General</span>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'manage_departments' %}" target="_blank">
+                                    <i class="far fa-gem"></i>
+                                    <span>Manage Departments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'manage_employees' %}" target="_blank">
+                                    <i class="far fa-gem"></i>
+                                    <span>Manage Employees</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'manage_holidays' %}" target="_blank">
+                                    <i class="far fa-gem"></i>
+                                    <span>Manage Holidays</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'manage_jobs' %}" target="_blank">
+                                    <i class="far fa-gem"></i>
+                                    <span>Manage job positions</span>
+                                </a>
+
+                            </li>
+
+
+                            <li>
+                                <a href="{% url 'see_answer_requests' %}" target="_blank">
+                                    <i class="far fa-gem"></i>
+                                    <span>Requests from managers</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-chart-line"></i>
+                                    <span>Charts</span>
+                                </a>
+
+                            </li>
+                            <li class="header-menu">
+                                <span>Extra</span>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-book"></i>
+                                    <span>Documentation</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-calendar"></i>
+                                    <span>Calendar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- sidebar-menu  -->
                 </div>
-            </div>
 
-            <div class="sidebar-menu">
-                <ul>
-                    <li class="header-menu">
-                        <span>General</span>
-                    </li>
-
-                    <li>
-                        <a href="{% url 'manage_departments' %}" target="_blank">
-                            <i class="far fa-gem"></i>
-                            <span>Manage Departments</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'manage_employees' %}" target="_blank">
-                            <i class="far fa-gem"></i>
-                            <span>Manage Employees</span>
-                        </a>
-
-                    </li>
-                    <li>
-                        <a href="{% url 'manage_holidays' %}" target="_blank">
-                            <i class="far fa-gem"></i>
-                            <span>Manage Holidays</span>
-                        </a>
-
-                    </li>
-                    <li>
-                        <a href="{% url 'manage_jobs' %}" target="_blank">
-                            <i class="far fa-gem"></i>
-                            <span>Manage job positions</span>
-                        </a>
-
-                    </li>
-
-
-                    <li>
-                        <a href="{% url 'see_answer_requests' %}" target="_blank">
-                            <i class="far fa-gem"></i>
-                            <span>Requests from managers</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-chart-line"></i>
-                            <span>Charts</span>
-                        </a>
-
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-globe"></i>
-                            <span>Maps</span>
-                        </a>
-                    </li>
-                    <li class="header-menu">
-                        <span>Extra</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-book"></i>
-                            <span>Documentation</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-calendar"></i>
-                            <span>Calendar</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-folder"></i>
-                            <span>Examples</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- sidebar-menu  -->
+            </nav>
+            <!-- sidebar-wrapper  -->
         </div>
+    </div>
 
-    </nav>
-    <!-- sidebar-wrapper  -->
+    <div class="col-9" style="top:100px;">
+        <img src="https://media.giphy.com/media/l378c04F2fjeZ7vH2/giphy.gif"  style="width:1000px;height:500px;"/>
+    </div>
 
 </div>
 

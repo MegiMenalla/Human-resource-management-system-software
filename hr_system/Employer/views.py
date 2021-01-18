@@ -75,8 +75,9 @@ def logini(request):
             if user.is_active:
                 login(request, user)
                 request.session['id'] = user.id
-
+                print(request.user.id)
                 role = UserRole.objects.get(user=request.user.id)
+                print(role)
                 if role.role.id == 1:
                     return redirect('hr')
                 elif role.role.id == 2:

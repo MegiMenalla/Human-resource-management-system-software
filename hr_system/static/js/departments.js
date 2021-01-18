@@ -43,7 +43,7 @@ function buildList(){
             var item1 = `<li class="mb-3 " >
                           <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getDepartment(${el.id})">Edit</button>
                           <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
-                          <strong>  ${el.department_name} </strong>[Manager: ${el.get_manager_name}]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
+                          <strong>  ${el.department_name} </strong>[Manager: ${el.manager}]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
             listt.innerHTML +=item1
 
          })
@@ -81,7 +81,7 @@ form.addEventListener('submit', function(e){
         var selector = document.getElementById('depmanager');
         var depmanager = selector[selector.selectedIndex].value;
 
-        var selector = document.getElementById('wrapper');
+        selector = document.getElementById('wrapper');
         var depparent = selector[selector.selectedIndex].value;
 
 
@@ -136,8 +136,6 @@ var url = `http://127.0.0.1:8000/api/departments/${id}/`
 function deleteItem(item){
     console.log('clicked',item)
     var url = `http://127.0.0.1:8000/api/departments/${item}/`
-
-
     fetch( url, {
         method: 'DELETE',
         headers:{'Content-type' : 'application/json',

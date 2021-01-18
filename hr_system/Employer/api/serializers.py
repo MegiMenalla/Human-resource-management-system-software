@@ -56,9 +56,3 @@ class UserHolidaySerializer(serializers.ModelSerializer):
         model = UserHoliday
         fields = ['id', 'us', 'days_left']
 
-
-'''class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['id', 'user', 'account']
-'''

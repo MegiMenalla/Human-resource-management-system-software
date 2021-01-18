@@ -66,9 +66,3 @@ class AllowanceRequest(models.Model):
     description = models.TextField(max_length=1000, null=True, blank=True)
 
 
-'''class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    account = models.OneToOneField(Users, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.account.first_name'''
