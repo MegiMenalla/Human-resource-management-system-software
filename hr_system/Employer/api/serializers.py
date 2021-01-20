@@ -27,7 +27,7 @@ class HolidaySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id', 'email', 'user']
+        fields = ['id', 'first_name', 'last_name', 'salary', 'phone_no', 'hire_date', 'department_id', 'email', 'user', 'active']
 
 
 # serializer to make a request

@@ -94,6 +94,27 @@ class UsersRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UserSerializer
 
+    # activate user
+    def put(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = self.get_object()
+            user.active = True
+            user.save()
+            return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+        return Response(UserSerializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    # apply soft delete
+    def delete(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = self.get_object()
+            user.active = False
+            user.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
 
 # list requests that are not checked yet
 class RequestList(generics.ListAPIView):

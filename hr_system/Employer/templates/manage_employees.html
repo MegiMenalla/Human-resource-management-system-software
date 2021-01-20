@@ -11,7 +11,7 @@
 
     </div>
 
-     <div class="col-5 mt-2">
+     <div class="col-4 mt-2">
          <h5 class="pb-3 pt-0">Create a new employee:</h5>
          <form id="form-wrapper">
             <div class="form-group">
@@ -44,14 +44,14 @@
 
                 </select>
 
-
-
-
             </div>
 
             <button type="submit" class="btn btn-success mt-1 mr-3">Submit</button>
             <button  class="btn btn-outline-secondary mt-1" onclick="reset()">Reset</button>
         </form>
+    </div>
+    <div class="col-1">
+        <a class="btn btn-sm btn-dark"  style="position:absolute;top:30px;left:180px;" href="{% url 'deleted_users' %}">Deleted users</a>
     </div>
 </div>
 <script src="{% static 'js/users.js' %}"></script>

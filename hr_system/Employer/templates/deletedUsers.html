@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage employees</h4>
+<div class="row container pl-5  " >
+    <div class="col-7 pt-5">
+        <h5 class="pb-3">Deleted Users:</h5>
+        <ul id="listt" style="list-style: none;">
+
+        </ul>
+
+    </div>
+
+
+</div>
+<script src="{% static 'js/deleted.js' %}"></script>
+
+{% endblock %}

@@ -22,6 +22,7 @@ class Users(models.Model):
     department_id = models.ForeignKey(Departments, null=True, on_delete=models.SET_NULL)
     email = models.EmailField(max_length=100, null=True, unique=True)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.first_name

@@ -56,11 +56,15 @@ def manage_jobs(request):
 
 
 @login_required(login_url='logini')
+def deleted_users(request):
+    data = {}
+    return render(request, 'deletedUsers.html', data)
+
+
+@login_required(login_url='logini')
 @is_human_resources
 def hr(request):
-    data = {
-
-    }
+    data = {}
     return render(request, 'hr_homepage.html', data)
 
 
@@ -73,19 +77,22 @@ def logini(request):
 
         if user is not None:
             if user.is_active:
-                login(request, user)
-                request.session['id'] = user.id
-                print(request.user.id)
-                role = UserRole.objects.filter(user=request.user.id)
-                ids = [i.role.id for i in role]
-                id = min(ids)
-                print(id)
-                if id == 1:
-                    return redirect('hr')
-                elif id == 2:
-                    return redirect('manager_page')
-                elif id == 3:
-                    return redirect('emp_page')
+                us = Users.objects.get(id=user.id)
+                if us.active:
+                    login(request, user)
+                    request.session['id'] = user.id
+                    role = UserRole.objects.filter(user=request.user.id)
+                    ids = [i.role.id for i in role]
+                    id = min(ids)
+                    print(id)
+                    if id == 1:
+                        return redirect('hr')
+                    elif id == 2:
+                        return redirect('manager_page')
+                    elif id == 3:
+                        return redirect('emp_page')
+                else:
+                    return HttpResponse('not active')
             else:
                 return HttpResponse('not active')
         else:
