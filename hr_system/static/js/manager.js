@@ -89,8 +89,8 @@ function buildListRequests(){
                                     <td>${el.start_hour}</td>
                                     <td>${el.end_date}</td>
                                     <td>${el.end_hour}</td>
-                                    <td><a class="btn btn-success" onClick='approve(${el.id})'>Approve</a></td>
-                                    <td><a class="btn btn-danger" onClick='deny(${el.id})'>Deny</a></td>
+                                    <td><a class="btn btn-sm btn-success" onClick='approve(${el.id})'>Approve</a></td>
+                                    <td><a class="btn btn-sm btn-danger" onClick='deny(${el.id})'>Deny</a></td>
                                     <td><form>
                                         <textarea id="desc" rows="2" cols="50"></textarea>
                                     </form></td>

@@ -2,21 +2,23 @@
 {% load static %}
 {% block content %}
 <h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage offical holidays</h4>
-<div class="row container pt-5" >
+<div class="row container pt-5">
     <div class="col-7  ">
+        <a class="btn btn-sm btn-dark mb-3" href="{% url 'export_offical_holidays_xls' %}">Export Offical Holidays</a>
+
         <h5 class="pb-3">List of all holidays:</h5>
         <ul id="listt" style="list-style: none;">
 
         </ul>
     </div>
     <div class="col-5">
-         <h5 class="pb-3">Create a new holiday:</h5>
+        <h5 class="pb-3">Create a new holiday:</h5>
         <form id="form-wrapper">
             <div class="form-group ">
                 <input type="text" class="form-control" id="holname" placeholder="Holiday Name" required>
 
                 <label for="day" class="pt-3">Pick a date</label>
-                <input type="date" class="form-control" id="day" placeholder="Holiday date" >
+                <input type="date" class="form-control" id="day" placeholder="Holiday date">
 
 
                 <label for="day" class="pt-3 pr-3">Active </label>

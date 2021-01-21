@@ -49,16 +49,18 @@ function buildList(){
          })
 
     })
-     //poplate the manager select
+     //populate the manager select
     var url1 = 'http://127.0.0.1:8000/api/users/'
     fetch(url1)
         .then((resp)=> resp.json())
         .then(function(response){
             console.log('Data:', response)
          response.forEach((el) => {
+         if(el.active){
             var item1 = `<option  value="${el.id}" >${el.first_name} ${el.last_name}</option >`
             depmanager.innerHTML +=item1
-          })
+         }
+        })
         })
 }
 

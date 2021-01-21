@@ -2,15 +2,17 @@
 {% load static %}
 {% block content %}
 <h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage departments:</h4>
-<div class="row container pt-5" >
+<div class="row container pt-5">
     <div class="col-9  ">
+        <a class="btn btn-sm btn-dark mb-5" href="{% url 'export_departments_xls' %}">Export all departments</a>
         <h5 class="pb-3">List of all departments:</h5>
         <ul id="listt" style="list-style: none;">
 
         </ul>
+
     </div>
     <div class="col-3">
-         <h5 class="pb-3">Create a new department:</h5>
+        <h5 class="pb-3">Create a new department:</h5>
         <form id="form-wrapper">
             <div class="form-group">
                 <input type="text" class="form-control mt-3" id="depname" placeholder="Department name" required>

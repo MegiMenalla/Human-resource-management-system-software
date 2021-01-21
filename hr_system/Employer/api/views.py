@@ -86,6 +86,7 @@ class UsersListCreateView(generics.ListCreateAPIView):
             user1.save()
 
             return Response(UserSerializer(user1).data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # get, update delete one specific employee

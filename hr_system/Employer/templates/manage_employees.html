@@ -2,8 +2,12 @@
 {% load static %}
 {% block content %}
 <h4 class="pl-5 pt-5 mt-5 pb-3 bg-dark" style="color:white;">Manage employees</h4>
-<div class="row container pl-5  " >
+<div class="row container pl-5  ">
     <div class="col-7 pt-5">
+        <a class="btn btn-sm btn-outline-dark mb-3"  href="{% url 'deleted_users' %}">Deleted
+            users</a>
+        <a class="btn btn-sm btn-outline-dark mb-3 ml-3"
+           href="{% url 'export_users_xls' %}">Export all users</a>
         <h5 class="pb-3">My employees:</h5>
         <ul id="listt" style="list-style: none;">
 
@@ -11,9 +15,9 @@
 
     </div>
 
-     <div class="col-4 mt-2">
-         <h5 class="pb-3 pt-0">Create a new employee:</h5>
-         <form id="form-wrapper">
+    <div class="col-5 mt-2">
+        <h5 class="pb-3 pt-0">Create a new employee:</h5>
+        <form id="form-wrapper">
             <div class="form-group">
 
                 <input type="text" class="form-control" id="name" placeholder="First name" required>
@@ -22,7 +26,8 @@
 
                 <input type="number" class="form-control mt-2" id="salary" placeholder="Salary" required>
 
-                <input type="tel" class="form-control mt-2" id="phone" placeholder="Phone number" pattern="06[7-9]{1}[0-9]{7}" required>
+                <input type="tel" class="form-control mt-2" id="phone" placeholder="Phone number"
+                       pattern="06[7-9]{1}[0-9]{7}" required>
 
                 <label class=" mt-2">Hire date (default: today)</label>
                 <input type="date" class="form-control" id="hire_date" placeholder="Hire date">
@@ -46,13 +51,11 @@
 
             </div>
 
-            <button type="submit" class="btn btn-success mt-1 mr-3">Submit</button>
-            <button  class="btn btn-outline-secondary mt-1" onclick="reset()">Reset</button>
+            <button type="submit" class="btn btn-secondary mt-1 mr-3">Submit</button>
+            <button class="btn btn-outline-secondary mt-1" onclick="reset()">Reset</button>
         </form>
     </div>
-    <div class="col-1">
-        <a class="btn btn-sm btn-dark"  style="position:absolute;top:30px;left:180px;" href="{% url 'deleted_users' %}">Deleted users</a>
-    </div>
+
 </div>
 <script src="{% static 'js/users.js' %}"></script>
 
