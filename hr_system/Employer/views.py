@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,8 @@ from django.shortcuts import render, redirect
 from .decorators import is_human_resources, is_manager, is_employee
 from .models import *
 
+logger = logging.getLogger('django')
+
 
 # Create your views here.
 
@@ -16,6 +19,7 @@ from .models import *
 @is_employee
 def emp_page(request):
     data = {}
+    logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Logging in as an Employee')
     return render(request, 'emp_page.html', data)
 
 
@@ -23,6 +27,7 @@ def emp_page(request):
 @is_manager
 def manager_page(request):
     data = {}
+    logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Logging in as Manager')
     return render(request, 'manager_page.html', data)
 
 
@@ -69,11 +74,28 @@ def deleted_users(request):
 @is_human_resources
 def hr(request):
     data = {}
+    logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Logging in as HR')
     return render(request, 'hr_homepage.html', data)
+
+
+import random
+seq = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E']
+def password_code(seq):
+    code = ''
+    code1 = [random.choice(seq) for i in range(10)]
+    for i in code1:
+        code += str(i)
+    return code
+
+
+counter = 0
+from hr_system.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 
 
 def logini(request):
     data = {}
+    global counter
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -96,10 +118,28 @@ def logini(request):
                     elif id == 3:
                         return redirect('emp_page')
                 else:
+                    logger.warning('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> This user has been deleted!')
                     return HttpResponse('not active')
             else:
                 return HttpResponse('not active')
         else:
+            logger.warning('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Username or password is not correct!')
+            counter += 1
+
+            if counter >= 3:
+                counter = 0
+                blocked = Users.objects.get(email=username)
+                acc = User.objects.get(id=blocked.id)
+                code = password_code(seq)
+                acc.set_password(code)
+                # acc.active = False
+                acc.save()
+                subject = 'Forgot my password'
+                message = f'Reset password. Use this code as a temporary password: {code}'
+                recepient = str(blocked.email)
+                send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently=False)
+                return HttpResponse('An email was sent to you! Follow the link to reset a new password!')
+                # return redirect('reset_password')
             return render(request, 'registration/login.html', data)
     else:
         return render(request, 'registration/login.html', data)
@@ -109,6 +149,7 @@ def logini(request):
 def logoutUser(request):
     del request.session['id']
     logout(request)
+    logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Log out')
     return redirect('logini')
 
 
@@ -120,6 +161,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
+            logger.warning('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Changed password successfully!')
             return redirect('change_password')
         else:
             messages.error(request, 'Please correct the error below.')
@@ -179,7 +221,7 @@ def export_departments_xls(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['department_name', 'name', 'surname', 'parent_department']
+    columns = ['department_name', 'manager', 'manager', 'parent_department']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -490,7 +532,7 @@ def export_job_positions_xls(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['name', 'surname', 'role']
+    columns = ['name', 'surname', 'role', 'department']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -498,7 +540,8 @@ def export_job_positions_xls(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = UserRole.objects.all().values_list('user__first_name', 'user__last_name', 'role__role')
+    rows = UserRole.objects.all().values_list('user__first_name', 'user__last_name', 'role__role',
+                                              'user__department_id__department_name')
 
     for row in rows:
         row_num += 1

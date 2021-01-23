@@ -43,14 +43,14 @@ function buildList(){
             var item1 = `<li class="mb-3 " >
                           <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getDepartment(${el.id})">Edit</button>
                           <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteItem(${el.id})">X</button>
-                          <strong>  ${el.department_name} </strong>[Manager: ${el.manager}]  [ Under the supervision of: ${el.parent_dep_name }]</li>`
+                          <strong>  ${el.department_name} </strong>[ Under the supervision of: ${el.parent_dep_name }]</li>`
             listt.innerHTML +=item1
 
          })
 
     })
      //populate the manager select
-    var url1 = 'http://127.0.0.1:8000/api/users/'
+    var url1 = 'http://127.0.0.1:8000/api/managers/'
     fetch(url1)
         .then((resp)=> resp.json())
         .then(function(response){
@@ -61,7 +61,7 @@ function buildList(){
             depmanager.innerHTML +=item1
          }
         })
-        })
+    })
 }
 
 

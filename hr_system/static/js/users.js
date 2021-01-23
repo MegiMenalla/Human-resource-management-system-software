@@ -15,11 +15,6 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-var activeItem = null;
-
-
-
-
 
 buildList()
 // list
@@ -42,7 +37,6 @@ function buildList(){
             var item = `<option  value="${el.id}" >${el.department_name}</option >`
             wrapper.innerHTML +=item
          })
-
     })
 
 

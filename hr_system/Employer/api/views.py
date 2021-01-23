@@ -1,11 +1,20 @@
 import datetime
+
+import redis
+from django.utils.decorators import method_decorator
 from rest_framework import viewsets, permissions, generics, status, mixins
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import *
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
 
 # list create for Departments
+
 class DepartmentListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Departments.objects.all()
@@ -17,6 +26,21 @@ class DepartmentRetrieveDeletePut(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Departments.objects.all()
     serializer_class = DepartmentSerializer
+
+
+# list managers only
+class ManagersList(generics.ListAPIView):
+    queryset = Users.objects.all()
+    serializer_class = Users
+    permission_classes = [IsAuthenticated]
+
+    @method_decorator(cache_page(60 * 60 * 2))
+    def list(self, request, *args, **kwargs):
+        managers = UserRole.objects.all()
+        managers = [i.user.id for i in managers if i.role.id == 2]
+        managers = Users.objects.filter(id__in=managers)
+        serializer = UserSerializer(managers, many=True)
+        return Response(serializer.data)
 
 
 # list create for Holiday dates
@@ -76,7 +100,7 @@ class UsersListCreateView(generics.ListCreateAPIView):
             dep = serializer.data.get('department_id')
             dep = Departments.objects.get(id=dep)
 
-            user_acc = User(username=email)
+            user_acc = User(username=email, email=email)
             user_acc.set_password(lname)
             user_acc.save()
             user1 = Users(first_name=fname, last_name=lname,
@@ -324,3 +348,5 @@ class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
     permission_classes = [IsAuthenticated]
+
+
