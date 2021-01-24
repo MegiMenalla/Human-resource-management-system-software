@@ -36,7 +36,7 @@ Maximum number of times you can add the wrong password is 3.
 
 In this case, you will be sent a random 10 digits code in your email address. Use that code as your password to log in and than change it in  the 'change password' page.
 
-This proccess can also be done from the HR's page where th hr, knowing your email, can send you a link which will direct you to reseting your password.
+This proccess can also be done from the HR's page where the HR, knowing your email, can send you a link which will direct you to reseting your password.
 
 -----
 
@@ -61,7 +61,7 @@ This proccess can also be done from the HR's page where th hr, knowing your emai
   
     If the user has not enough days left, the request will be automatically denied and associated with a predeclared reason.
   
-  6.Change a users password : http://127.0.0.1:8000/emp/reset_password/ ---> by entering a users email, the HR send him a link to reset his/her password.
+  6.Change a users password : http://127.0.0.1:8000/emp/reset_password/ ---> by entering a users email, the HR sends him a link to reset his/her password.
   
   7. Change password: http://127.0.0.1:8000/emp/change_password/
  
@@ -75,7 +75,7 @@ All the buttons in th middle export reports in excel format.
 
   1. Manage departments: http://127.0.0.1:8000/emp/manage_departments/  ---> creates, reads, updates, deletes, exports as excel department records.
   
-  2. Employee requests: http://127.0.0.1:8000/emp/see_answer_requests/ ---> views requests in two sectors: 'checked' requests which have been approved or denied and 'for           approval' requests which are to be checkeb by a human resources employee eventually. These are requests from users of the same department as the manager.
+  2. Employee requests: http://127.0.0.1:8000/emp/see_answer_requests/ ---> views requests in two sectors: 'checked' requests which have been approved or denied and 'for           approval' requests which are to be checked by a human resources employee eventually. These are requests from users of the same department as the manager.
   
   If the request dates overlap with another approved request of this same user, the request will be automatically denied and associated with a predeclared reason.
   
@@ -124,4 +124,4 @@ All the buttons in th middle export reports in excel format.
         - a start hour after the end hour (if start date== end date)
   the request will not be created.
  
--------
+
