@@ -1,9 +1,11 @@
 # Human-resource-management-system-software
------
+
 ### Relational db: 
 https://drive.google.com/file/d/1poR8iux6fUGAGfSnLDORtFzWMaIR7eex/view?usp=sharing
 
 -----
+Each one of the 3 possible roles, Human Resources/Manager/Employee, has its own interface.
+
 
 http://127.0.0.1:8000/emp/hr/ --> on the left sidebar, first five links are functional (half functional).
 
