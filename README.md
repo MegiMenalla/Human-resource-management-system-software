@@ -1,6 +1,7 @@
 # Human-resource-management-system-software
 
 ### Relational db: 
+
 https://drive.google.com/file/d/1poR8iux6fUGAGfSnLDORtFzWMaIR7eex/view?usp=sharing
 
 -----
@@ -20,16 +21,21 @@ After creating a superuser(assign him a valid email address), user the admin pan
 To login use this link: http://127.0.0.1:8000/emp/logini/
 
 If the user you want to log in with is superuser:
+
     Username & password are the same as the superusers username and password.
     
 If the user you want to log in with is created from the Manage Employees form in the human resources page:
+
     Username: 'your email address' 
+    
     Password: 'your last name'
     
 -----
 
 Maximum number of times you can add the wrong password is 3.
+
 In this case, you will be sent a random 10 digits code in your email address. Use that code as your password to log in and than change it in  the 'change password' page.
+
 This proccess can also be done from the HR's page where th hr, knowing your email, can send you a link which will direct you to reseting your password.
 
 -----
@@ -64,6 +70,7 @@ All the buttons in th middle export reports in excel format.
 ------
 
 #### If the user is a manager:
+
 ##### The left side links:
 
   1. Manage departments: http://127.0.0.1:8000/emp/manage_departments/  ---> creates, reads, updates, deletes, exports as excel department records.
@@ -83,15 +90,20 @@ All the buttons in th middle export reports in excel format.
 #### The right side contains a form to create a request
 
 * To  create an hourly request set the start and end date as the same date.
+
 * If the request contains : 
+
         - a start date before an end date
         - a start date smaller than todays date
         - a start hour after the end hour (if start date== end date)
+        
   the request will not be created.
+  
  
 -------
 
 #### If the user is an employee:
+
 ##### The left side links:
 
  * General information about the employee.
@@ -105,6 +117,7 @@ All the buttons in th middle export reports in excel format.
 #### The right side contains a form to create a request
 
 * To  create an hourly request set the start and end date as the same date.
+
 * If the request contains : 
         - a start date before an end date
         - a start date smaller than todays date
