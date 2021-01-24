@@ -4,8 +4,31 @@
 https://drive.google.com/file/d/1poR8iux6fUGAGfSnLDORtFzWMaIR7eex/view?usp=sharing
 
 -----
-Each one of the 3 possible roles, Human Resources/Manager/Employee, has its own interface.
 
+###Prerequisites:
+
+After creating a superuser(assign him a valid email address), user the admin panel to:
+  1. Create 3 roles on the Role table in this specific order: id-1: Human resources,id-2: Manager,id-3: Employee
+  2. Create a department 
+  3. Create a record on the Users table
+  
+-----
+####Each one of the 3 possible roles, Human Resources/Manager/Employee, has its own interface.
+
+To login use this link: http://127.0.0.1:8000/emp/logini/
+
+If the user you want to log in with is superuser:
+    Username & password are the same as the superusers username and password.
+    
+If the user you want to log in with is created from the Manage Employees form in the human resources page:
+    Username: 'your email address' 
+    Password: 'your last name'
+-----
+Maximum number of times you can add the wrong password is 3.
+In this case, you will be sent a random 10 digits code in your email address. Use that code as your password to log in and than change it in  the 'change password' page.
+This proccess can also be done from the HR's page where th hr, knowing your email, can send you a link which will direct you to reseting your password.
+
+-----
 
 http://127.0.0.1:8000/emp/hr/ --> on the left sidebar, first five links are functional (half functional).
 
