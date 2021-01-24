@@ -146,7 +146,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'anamenalla1@gmail.com'
 EMAIL_HOST_PASSWORD = 'harrystyles'
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -172,18 +171,3 @@ LOGGING = {
     }
 }
 
-
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-'''CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-        "TIMEOUT": 5 * 60,
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-        "KEY_PREFIX": "example"
-    }
-}
-'''

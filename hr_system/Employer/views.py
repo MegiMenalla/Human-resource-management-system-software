@@ -7,8 +7,11 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from .decorators import is_human_resources, is_manager, is_employee
+from .decorators import is_human_resources, is_manager, is_employee, is_manager_or_hr
 from .models import *
+import random
+from hr_system.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 
 logger = logging.getLogger('django')
 
@@ -18,7 +21,23 @@ logger = logging.getLogger('django')
 @login_required(login_url='logini')
 @is_employee
 def emp_page(request):
-    data = {}
+    user = Users.objects.get(id=request.user.id)
+    name = user.first_name + ' ' + user.last_name
+    salary = user.salary
+    phone = user.phone_no
+    email = user.email
+    dep = Departments.objects.get(id=user.department_id.id)
+    days_left = UserHoliday.objects.get(us=user)
+    days_left = days_left.days_left
+    print(days_left)
+    data = {
+        'name': name,
+        'salary': salary,
+        'phone': phone,
+        'email': email,
+        'days_left': days_left,
+        'dep': dep
+    }
     logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Logging in as an Employee')
     return render(request, 'emp_page.html', data)
 
@@ -52,12 +71,14 @@ def manage_employees(request):
 
 
 @login_required(login_url='logini')
+@is_manager_or_hr
 def manage_departments(request):
     data = {}
     return render(request, 'manage_departments.html', data)
 
 
 @login_required(login_url='logini')
+@is_manager_or_hr
 def manage_jobs(request):
     data = {}
     return render(request, 'manage_jobs.html', data)
@@ -78,8 +99,9 @@ def hr(request):
     return render(request, 'hr_homepage.html', data)
 
 
-import random
 seq = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E']
+
+
 def password_code(seq):
     code = ''
     code1 = [random.choice(seq) for i in range(10)]
@@ -89,8 +111,6 @@ def password_code(seq):
 
 
 counter = 0
-from hr_system.settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
 
 
 def logini(request):
@@ -104,6 +124,7 @@ def logini(request):
         if user is not None:
             if user.is_active:
                 us = Users.objects.get(id=user.id)
+
                 if us.active:
                     login(request, user)
                     request.session['id'] = user.id
@@ -139,7 +160,6 @@ def logini(request):
                 recepient = str(blocked.email)
                 send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently=False)
                 return HttpResponse('An email was sent to you! Follow the link to reset a new password!')
-                # return redirect('reset_password')
             return render(request, 'registration/login.html', data)
     else:
         return render(request, 'registration/login.html', data)

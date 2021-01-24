@@ -49,7 +49,9 @@
 
                             </li>
 
-
+                            <li class="header-menu">
+                                <span>User service</span>
+                            </li>
                             <li>
                                 <a href="{% url 'see_answer_requests' %}" target="_blank">
                                     <i class="far fa-gem"></i>
@@ -57,25 +59,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'reset_password' %}">
                                     <i class="fa fa-chart-line"></i>
-                                    <span>Charts</span>
-                                </a>
-
-                            </li>
-                            <li class="header-menu">
-                                <span>Extra</span>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-book"></i>
-                                    <span>Documentation</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>Calendar</span>
+                                    <span>Change a users password</span>
                                 </a>
                             </li>
                         </ul>
@@ -89,18 +75,35 @@
     </div>
 
     <div class="col-9 mt-5" style="top:100px;">
-        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_absence_rate_xls' %}">Export absence rates</a>
-        <a class="btn btn-sm btn-outline-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_users_xls' %}">Export  users list</a>
-        <a class="btn btn-sm btn-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_departments_xls' %}">Export  departments </a>
-        <a class="btn btn-sm btn-outline-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_offical_holidays_xls' %}">Export offical holidays</a>
-        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_offical_holidays_xls' %}">Export offical holidays</a>
-        <a class="btn btn-sm btn-dark mb-5 ml-3 pt-5 pb-5 pl-4 pr-4" href="{% url 'export_new_hires_xls' %}">New hires this month</a>
-        <img src="https://media.giphy.com/media/3o6gaSIn4dGiY094Os/giphy.gif" class="ml-4"  style="width:220px;height:120px;position:absolute;top:166px;"/>
-        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5" style="width:220px;height:120px;position:absolute;top:166px;right:200px;" href="{% url 'export_new_hires_year_xls' %}">New hires this year</a>
-        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5" style="width:235px;height:120px;position:absolute;top:320px;left:14px;" href="{% url 'export_salary_xls' %}">Salaries highest to lowest</a>
-        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5" style="width:200px;height:120px;position:absolute;top:320px;left:270px;" href="{% url 'export_approvers_xls' %}">Approvers </a>
-        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5" style="width:220px;height:120px;position:absolute;top:320px;left:480px;" href="{% url 'export_deniers_xls' %}">Deniers</a>
-        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5" style="width:220px;height:120px;position:absolute;top:320px;right:200px;" href="{% url 'export_job_positions_xls' %}">Job Positions</a>
+        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_absence_rate_xls' %}">Export
+            absence rates</a>
+        <a class="btn btn-sm btn-outline-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_users_xls' %}">Export
+            users list</a>
+        <a class="btn btn-sm btn-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_departments_xls' %}">Export
+            departments </a>
+        <a class="btn btn-sm btn-outline-dark mb-5 ml-3 pt-5 pb-5 pl-5 pr-5"
+           href="{% url 'export_offical_holidays_xls' %}">Export offical holidays</a>
+        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5" href="{% url 'export_offical_holidays_xls' %}">Export
+            offical holidays</a>
+        <a class="btn btn-sm btn-dark mb-5 ml-3 pt-5 pb-5 pl-4 pr-4" href="{% url 'export_new_hires_xls' %}">New hires
+            this month</a>
+        <img src="https://media.giphy.com/media/3o6gaSIn4dGiY094Os/giphy.gif" class="ml-4"
+             style="width:220px;height:120px;position:absolute;top:166px;"/>
+        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5"
+           style="width:220px;height:120px;position:absolute;top:166px;right:200px;"
+           href="{% url 'export_new_hires_year_xls' %}">New hires this year</a>
+        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5"
+           style="width:235px;height:120px;position:absolute;top:320px;left:14px;" href="{% url 'export_salary_xls' %}">Salaries
+            highest to lowest</a>
+        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5"
+           style="width:200px;height:120px;position:absolute;top:320px;left:270px;"
+           href="{% url 'export_approvers_xls' %}">Approvers </a>
+        <a class="btn btn-sm btn-dark mb-5 pt-5 pb-5 pl-5 pr-5"
+           style="width:220px;height:120px;position:absolute;top:320px;left:480px;"
+           href="{% url 'export_deniers_xls' %}">Deniers</a>
+        <a class="btn btn-sm btn-outline-dark mb-5 pt-5 pb-5 pl-5 pr-5"
+           style="width:220px;height:120px;position:absolute;top:320px;right:200px;"
+           href="{% url 'export_job_positions_xls' %}">Job Positions</a>
 
     </div>
 

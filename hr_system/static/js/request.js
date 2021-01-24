@@ -29,7 +29,7 @@ console.log(id);
 
 // post
 function postRequest(userID){
-    infoList(userID);
+
     var form = document.getElementById('form-wrapper');
 
     var url = `http://127.0.0.1:8000/api/requests/`
@@ -245,29 +245,6 @@ function deleteRequest(req_id){
 
 }
 
-
-
-
-
-// list personal information
-function infoList(userID){
-
-    var url = `http://127.0.0.1:8000/api/users/${userID}`
-    fetch(url)
-    .then((resp)=> resp.json())
-    .then(function(response){
-    document.getElementById('listt').innerHTML=`
-        <li>Date & Time: ${moment()}</li>
-        <li class="pb-3 pt-3" id="name"><strong>${response.first_name} ${response.last_name}</strong></li>
-        <li class="pb-3" id="jobid">Job position:  </li>
-        <li class="pb-3" id="salary">Salary: ${response.salary}</li>
-        <li class="pb-3" id="phone">Phone:  ${response.phone_no}</li>
-        <li class="pb-3" id="positionLeft">Days left in the current position</li>
-        <li class="pb-3" id="premissionLeft">Days left to request permission</li>
-        <li class="pb-3" id="futureHoliday">Nearest future holiday</li>`
-
-    })
-}
 
 
 

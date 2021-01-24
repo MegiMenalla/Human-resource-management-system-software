@@ -23,31 +23,25 @@
                             <span>Employee Requests</span>
                         </a>
                     </li>
-                    <li class="pb-3">
-                        <a href="#">
-                            <i class="fa fa-chart-line"></i>
-                            <span>Charts</span>
-                        </a>
-                    </li>
                     <li class="header-menu pb-3 pt-5 mt-5">
                         <span>Extra</span>
                     </li>
                     <li class="pb-3">
-                        <a href="#">
+                        <a href="{% url 'export_users_xls' %}">
                             <i class="fa fa-book"></i>
-                            <span>Documentation</span>
+                            <span>All users.xls</span>
                         </a>
                     </li>
                     <li class="pb-3">
-                        <a href="#">
-                            <i class="fa fa-calendar"></i>
-                            <span>Calendar</span>
+                        <a href="{% url 'export_absence_rate_xls' %}">
+                            <i class="fa fa-book"></i>
+                            <span>Absence rate</span>
                         </a>
                     </li>
-                    <li class="pb-3">
-                        <a href="#">
-                            <i class="fa fa-folder"></i>
-                            <span>Examples</span>
+                     <li class="pb-3">
+                        <a href="{% url 'export_job_positions_xls' %}">
+                            <i class="fa fa-book"></i>
+                            <span>Job positions</span>
                         </a>
                     </li>
                 </ul>

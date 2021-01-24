@@ -6,11 +6,17 @@
     <div class="row">
         <div class="col-2">
             <a class="btn btn-outline-danger ml-4 mb-2" href="{% url 'change_password' %}" target="_blank">Change Password</a>
-            <a class="btn btn-sm btn-outline-dark mb-3 ml-4" onclick="infoList({{request.user.id}})">Personal information</a>
-
-            <ul style="list-style:none" id="listt">
-
+            <h6 class="mt-4">Personal information</h6>
+            <ul class="pl-1 mt-3">
+                <li class="mt-3">{{name}}</li>
+                <li class="mt-3">Phone: {{phone}}</li>
+                <li class="mt-3">{{email}}</li>
+                <li class="mt-3">Salary: {{salary}}</li>
+                <li class="mt-3">Department: {{dep}}</li>
+                <li class="mt-3">{{days_left}} days left to request permissions.</li>
             </ul>
+
+
         </div>
 
         <div class="col-7">

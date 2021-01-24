@@ -156,8 +156,6 @@ function deleteItem(item){
 var id = null;
 function getDepartment(item){
     var url = `http://127.0.0.1:8000/api/departments/${item}/`
-        //var depname = document.getElementById('depname').value;
-        //var depmanager = document.getElementById('depmanager').value;
         fetch( url, {
             method: 'GET',
             headers:{'Content-type' : 'application/json',
@@ -178,27 +176,6 @@ function getDepartment(item){
 
 
 
-// get manager name
-
-// get one user
-
-function getManager(user, dep){
-    var url = `http://127.0.0.1:8000/api/users/${user}/`
-
-        fetch( url, {
-            method: 'GET',
-            headers:{'Content-type' : 'application/json',
-            'X-CSRFToken': csrftoken
-            }
-            }).then((resp)=> resp.json())
-            .then(function(response){
-                if (document.getElementById(dep)!=null){
-                var n = response.first_name.concat(' ').concat(response.last_name);
-                document.getElementById(dep).innerHTML = n;
-                console.log('afteraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                }
-            })
-    }
 
 
 

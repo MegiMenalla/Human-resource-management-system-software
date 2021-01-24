@@ -1,9 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 from .views import *
 
 urlpatterns = [
 
-    path(r'departments/', DepartmentListCreateView.as_view()),
+    path(r'departments/', DepartmentListCreateView.as_view()), #cache_page(60 * 2)
     path(r'departments/<int:pk>/', DepartmentRetrieveDeletePut.as_view()),
 
     path(r'holidays/', HolidayListCreateView.as_view()),
@@ -26,6 +26,5 @@ urlpatterns = [
 
     path(r'requests-to-be-checked/', RequestList.as_view()),
     path(r'managers/', ManagersList.as_view()),
-
 
 ]

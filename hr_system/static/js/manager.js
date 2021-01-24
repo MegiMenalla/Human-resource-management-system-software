@@ -16,7 +16,7 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 var name=null;
-var id = getID();
+//var id = getID();
 
 
 
@@ -91,9 +91,9 @@ function buildListRequests(){
                                     <td>${el.end_hour}</td>
                                     <td><a class="btn btn-sm btn-success" onClick='approve(${el.id})'>Approve</a></td>
                                     <td><a class="btn btn-sm btn-danger" onClick='deny(${el.id})'>Deny</a></td>
-                                    <td><form>
-                                        <textarea id="desc" rows="2" cols="50"></textarea>
-                                    </form></td>
+                                    <td>
+                                        <textarea id="${el.id}" rows="2" cols="50"></textarea>
+                                    </td>
                                 </tr>`
                 uncheckedList.innerHTML +=unchecked
             }
@@ -107,7 +107,7 @@ function buildListRequests(){
 
 // update // approve a request and give a reason why
 function  approve(id){
-    var desc = document.getElementById('desc').value;
+    var desc = document.getElementById(id).value;
     var url = `http://127.0.0.1:8000/api/requests/${id}/`
 
     fetch(url, {
@@ -129,7 +129,7 @@ function  approve(id){
 // update
 // deny a request and give a reason why
 function  deny(id){
-  var desc = document.getElementById('desc').value;
+  var desc = document.getElementById(id).value;
     var url = `http://127.0.0.1:8000/api/requests/${id}/`
 
     fetch(url, {

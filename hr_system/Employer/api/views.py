@@ -1,15 +1,9 @@
 import datetime
-
-import redis
-from django.utils.decorators import method_decorator
-from rest_framework import viewsets, permissions, generics, status, mixins
-from rest_framework.decorators import api_view
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import *
-from django.conf import settings
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
 
@@ -34,11 +28,11 @@ class ManagersList(generics.ListAPIView):
     serializer_class = Users
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(cache_page(60 * 60 * 2))
+    # @method_decorator(cache_page(60 * 2))
     def list(self, request, *args, **kwargs):
         managers = UserRole.objects.all()
         managers = [i.user.id for i in managers if i.role.id == 2]
-        managers = Users.objects.filter(id__in=managers)
+        managers = Users.objects.filter(id__in=managers, active=True)
         serializer = UserSerializer(managers, many=True)
         return Response(serializer.data)
 
@@ -300,7 +294,6 @@ class RequestRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
                     userholidays.save()
 
             req.delete()
-            print('deleted')
             return self.destroy(request, *args, **kwargs)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -348,5 +341,3 @@ class UserRoleViewRetrieveDeletePutView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
     permission_classes = [IsAuthenticated]
-
-

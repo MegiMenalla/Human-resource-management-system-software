@@ -68,12 +68,10 @@ function buildList(){
                  var item1 = `<li  id="${el.id}" class="mb-3 " >
                           <button  class="btn btn-sm  btn-outline-dark pt-0 pb-0 mr-3" onclick="getUser(${el.id})">Edit</button>
                           <button class="btn btn-sm  btn-outline-danger pt-0 pb-0 mr-3" onclick="deleteUser(${el.id})">X</button>
-                          <strong>  ${el.first_name} ${el.last_name}</strong>    [${el.phone_no} ]  </li>`
+                          <strong>  ${el.first_name} ${el.last_name}</strong></li>`
                 listt.innerHTML +=item1
             }
-
          })
-
     })
 }
 
